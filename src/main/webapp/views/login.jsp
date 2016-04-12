@@ -36,6 +36,7 @@
                 <input type="email" name="email" id="email-input" required class="form-input">
                 <span id="email-error" class="error-text"></span>
             </div>
+
             <div class="form-row">
                 <label class="form-label" for="password-input">
                     Passwort
