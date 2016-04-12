@@ -44,6 +44,7 @@
                        maxlength="12">
                 <span id="password-error" class="error-text"></span>
             </div>
+
             <div class="form-row form-row-center">
                 <button class="button button-submit">
                     Anmelden
