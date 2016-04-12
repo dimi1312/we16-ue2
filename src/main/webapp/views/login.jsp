@@ -29,6 +29,7 @@
     <main aria-labelledby="formheadline">
         <form class="form" method="post">
             <h2 id="formheadline" class="registration-headline">Anmelden</h2>
+
             <div class="form-row">
                 <label class="form-label" for="email-input">
                     Email
