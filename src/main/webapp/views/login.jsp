@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body data-decimal-separator="," data-grouping-separator=".">
-
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
-
 <header aria-labelledby="bannerheadline">
     <img class="title-image" src="../images/big-logo-small.png" alt="BIG Bid logo">
 
@@ -46,7 +44,6 @@
                        maxlength="12">
                 <span id="password-error" class="error-text"></span>
             </div>
-
             <div class="form-row form-row-center">
                 <button class="button button-submit">
                     Anmelden
