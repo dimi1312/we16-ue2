@@ -29,8 +29,8 @@
         }
         function print() {
             if(typeof(Storage) !== "undefined") {
-                document.getElementById("recently-viewed-headline").style.display = "initial";
-                document.getElementById("recently-viewed-list").style.display = "initial";
+             /*   document.getElementById("recently-viewed-headline").style.display = "initial";
+                document.getElementById("recently-viewed-list").style.display = "initial";*/
                 document.getElementById("first").innerHTML = localStorage.last1;
                 document.getElementById("first").href = localStorage.href1;
                 document.getElementById("second").innerHTML = localStorage.last2;
@@ -41,12 +41,14 @@
         }
         function clickCounter(node) {
             if(typeof(Storage) !== "undefined") {
-                localStorage.last3 = localStorage.last2;
-                localStorage.href3 = localStorage.href2;
-                localStorage.last2 = localStorage.last1;
-                localStorage.href2 = localStorage.href1;
-                localStorage.last1 = node.name;
-                localStorage.href1 = node.href;
+                if(localStorage.last1 !== node.name) {
+                    localStorage.last3 = localStorage.last2;
+                    localStorage.href3 = localStorage.href2;
+                    localStorage.last2 = localStorage.last1;
+                    localStorage.href2 = localStorage.href1;
+                    localStorage.last1 = node.name;
+                    localStorage.href1 = "/../../controller/OverviewServlet?param=".concat(node.name);
+                }
             }
         }
     </script>
@@ -99,11 +101,11 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3 id="recently-viewed-headline" class="recently-viewed-headline">Zuletzt angesehen</h3>
-            <ul id="recently-viewed-list" class="recently-viewed-list">
-                <li><a id="first" href="" class="recently-viewed-link"> </a></li>
-                <li><a id="second" href="" class="recently-viewed-link"></a></li>
-                <li><a id="third" href="" class="recently-viewed-link"></a></li>
+            <h3>Zuletzt angesehen</h3>
+            <ul>
+                <li><a id="first" href=""></a></li>
+                <li><a id="second" href=""></a></li>
+                <li><a id="third" href=""></a></li>
             </ul>
         </div>
     </aside>
