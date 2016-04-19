@@ -77,7 +77,7 @@
             <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time=<%=product.getAblaufdatum()%>
                                                   ></span>
             </p>
-            <form class="bid-form" method="post" action="">
+            <form class="bid-form" method="post" action="/../../controller/BietenServlet">
                 <label class="bid-form-field" id="highest-price">
                     <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span>
                     <span class="highest-bidder"><%=product.getHoechstbietender()%></span>
