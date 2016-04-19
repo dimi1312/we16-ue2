@@ -26,6 +26,7 @@
                 case 4: // done
                     if(request.status == 200) {
                         var a= request.getAttribute("fuerMax");
+
                         alert(a);
                         //document.getElementById("bid-error").style.display="block";
                     }

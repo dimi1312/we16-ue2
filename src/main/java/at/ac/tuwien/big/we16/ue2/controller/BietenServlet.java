@@ -33,8 +33,18 @@ public class BietenServlet extends HttpServlet{
             //Sortiment s = (Sortiment) this.getServletContext().getAttribute("sortiment");
 
             Auction a = (Auction) session.getAttribute("product");
-            request.setAttribute("fuerMax", 2);
+            User u = (User) session.getAttribute("user");
 
+
+            //Diskussionsnotiz: Bei der Auktion die User speichern -> dadurch auch alle die notfied werden.
+            if (a.getHoechstgebot() >= gebotener_preis) {
+                //return gebot ist niedriger -> display: block
+                response.getWriter().write("{auktionen: " + u.getAuctions() + ", kontostand: " + u.getMoney() + ", display:block}");
+
+            } else {
+                //display:none
+                response.getWriter().write("{auktionen: " + u.getAuctions() + ", kontostand: " + u.getMoney() + ", display:none}");
+            }
 
             request.getServletContext().getRequestDispatcher("/views/details.jsp").forward(request, response);
 
