@@ -7,6 +7,34 @@
     <title>BIG Bid - Der Pate (Film)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
+    <script type="text/javascript">
+        var request = null;
+        request = new XMLHttpRequest();
+        request.open("POST", "/../../controller/BietenServlet", true);
+        request.onreadystatechange = stateChanged;
+
+        function bieten() {
+            request.send(null);
+        }
+        function stateChanged() {
+            switch(request.readyState)
+            {
+                case 0: break; // unsent
+                case 1: break; // opened
+                case 2: break; // sent
+                case 3: break; // loading
+                case 4: // done
+                    if(request.status == 200) {
+                        var a= request.getAttribute("fuerMax");
+                        alert(a);
+                        //document.getElementById("bid-error").style.display="block";
+                    }
+                    break;
+            }
+        }
+
+
+    </script>
 </head>
 <body data-decimal-separator="," data-grouping-separator=".">
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
