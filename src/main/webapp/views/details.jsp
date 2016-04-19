@@ -25,9 +25,15 @@
                 case 3: break; // loading
                 case 4: // done
                     if(request.status == 200) {
-                        var a= request.getAttribute("fuerMax");
-                        alert(a);
-                        //document.getElementById("bid-error").style.display="block";
+                        var display = document.getElementById("bid-error");
+                        var actcount = document.getElementById("name");
+                        var kontostand = document.getElementById("name");
+
+                        var json = JSON.parse(request.responseText);
+
+                        display.style.display=json.display;
+                        actcount.style.display=json.auktionen;
+                        kontostand.style.display=json.kontostand;
                     }
                     break;
             }
