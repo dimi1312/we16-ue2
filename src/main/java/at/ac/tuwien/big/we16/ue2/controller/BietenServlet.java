@@ -43,7 +43,7 @@ public class BietenServlet extends HttpServlet{
 
             } else {
                 //display:none
-                response.getWriter().write("{auktionen: " + u.getAuctions() + ", kontostand: " + u.getMoney() + ", display:none}");
+                response.getWriter().write("{auktionen: \"" + u.getAuctions() + "\", kontostand: \"" + u.getMoney() + "\", \"display\":\"none\"}");
             }
 
             request.getServletContext().getRequestDispatcher("/views/details.jsp").forward(request, response);
