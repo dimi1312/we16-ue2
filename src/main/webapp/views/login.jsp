@@ -25,7 +25,7 @@
 </header>
 <div class="main-container">
     <main aria-labelledby="formheadline">
-        <form class="form" method="post">
+        <form class="form" method="post" action="/../../controller/LoginServlet">
             <h2 id="formheadline" class="registration-headline">Anmelden</h2>
 
             <div class="form-row">
@@ -45,7 +45,7 @@
                 <span id="password-error" class="error-text"></span>
             </div>
             <div class="form-row form-row-center">
-                <button class="button button-submit">
+                <button class="button button-submit" type="submit" name="login" value="login">
                     Anmelden
                 </button>
             </div>
@@ -53,7 +53,7 @@
     </main>
 </div>
 <footer>
-    © 2016 BIG Bid
+    &copy; 2016 BIG Bid
 </footer>
 <script src="/scripts/jquery.js"></script>
 <script src="/scripts/framework.js"></script>

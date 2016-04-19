@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.LocalDateTime;
 
 public class JSONDataLoader {
 
@@ -67,11 +68,13 @@ public class JSONDataLoader {
     }
 
     public class Music {
-
+        private String product_id;
         private String album_name;
         private String artist;
         private String year;
         private String img;
+        private double preis;
+        private String auction_end;
 
         public String getAlbum_name() {
             return album_name;
@@ -104,14 +107,40 @@ public class JSONDataLoader {
         public void setImg(String img) {
             this.img = img;
         }
+
+        public double getPreis() {
+            return preis;
+        }
+
+        public void setPreis(double preis) {
+            this.preis = preis;
+        }
+
+        public String getProduct_id() {
+            return product_id;
+        }
+
+        public void setProduct_id(String product_id) {
+            this.product_id = product_id;
+        }
+
+        public String getAuction_end() {
+            return auction_end;
+        }
+
+        public void setAuction_end(String auction_end) {
+            this.auction_end = auction_end;
+        }
     }
 
     public class Book {
-
+        private String product_id;
         private String title;
         private String author;
         private String year;
         private String img;
+        private double preis;
+        private String auction_end;
 
         public String getTitle() {
             return title;
@@ -144,14 +173,40 @@ public class JSONDataLoader {
         public void setImg(String img) {
             this.img = img;
         }
+
+        public double getPreis() {
+            return preis;
+        }
+
+        public void setPreis(double preis) {
+            this.preis = preis;
+        }
+
+        public String getProduct_id() {
+            return product_id;
+        }
+
+        public void setProduct_id(String product_id) {
+            this.product_id = product_id;
+        }
+
+        public String getAuction_end() {
+            return auction_end;
+        }
+
+        public void setAuction_end(String auction_end) {
+            this.auction_end = auction_end;
+        }
     }
 
     public class Movie {
-
+        private String product_id;
         private String title;
         private String director;
         private String year;
         private String img;
+        private double preis;
+        private String auction_end;
 
         public String getTitle() {
             return title;
@@ -183,6 +238,30 @@ public class JSONDataLoader {
 
         public void setImg(String img) {
             this.img = img;
+        }
+
+        public double getPreis() {
+            return preis;
+        }
+
+        public void setPreis(double preis) {
+            this.preis = preis;
+        }
+
+        public String getProduct_id() {
+            return product_id;
+        }
+
+        public void setProduct_id(String product_id) {
+            this.product_id = product_id;
+        }
+
+        public String getAuction_end() {
+            return auction_end;
+        }
+
+        public void setAuction_end(String auction_end) {
+            this.auction_end = auction_end;
         }
     }
 
