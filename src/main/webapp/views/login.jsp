@@ -10,7 +10,6 @@
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 <header aria-labelledby="bannerheadline">
     <img class="title-image" src="../images/big-logo-small.png" alt="BIG Bid logo">
-
     <h1 class="header-title" id="bannerheadline">
         BIG Bid
     </h1>
@@ -22,6 +21,7 @@
             </li>
         </ul>
     </nav>
+
 </header>
 <div class="main-container">
     <main aria-labelledby="formheadline">
