@@ -32,7 +32,7 @@ public class BietenServlet extends HttpServlet{
             double gebotener_preis = Double.parseDouble(request.getParameter("new-price"));
             //Sortiment s = (Sortiment) this.getServletContext().getAttribute("sortiment");
 
-            Auction a = (Auction) session.getAttribute("aktAuct");
+            Auction a = (Auction) session.getAttribute("product");
             request.setAttribute("fuerMax", 2);
 
 

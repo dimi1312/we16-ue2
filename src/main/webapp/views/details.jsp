@@ -1,5 +1,5 @@
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.beans.User" scope="session" />
-<jsp:useBean beanName="aktAuct" id="product" class="at.ac.tuwien.big.we16.ue2.beans.Auction" scope="session"/>
+<jsp:useBean id="product" class="at.ac.tuwien.big.we16.ue2.beans.Auction" scope="session"/>
 <!doctype html>
 <html lang="de">
 <head>
