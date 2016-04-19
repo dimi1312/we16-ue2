@@ -35,18 +35,19 @@ public class BietenServlet extends HttpServlet{
             Auction a = (Auction) session.getAttribute("product");
             User u = (User) session.getAttribute("user");
 
-
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
             //Diskussionsnotiz: Bei der Auktion die User speichern -> dadurch auch alle die notfied werden.
             if (a.getHoechstgebot() >= gebotener_preis) {
                 //return gebot ist niedriger -> display: block
-                response.getWriter().write("{auktionen: " + u.getAuctions() + ", kontostand: " + u.getMoney() + ", display:block}");
-
+               // response.getWriter().write("{auktionen: " + u.getAuctions() + ", kontostand: " + u.getMoney() + ", display:block}");
+                response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
             } else {
                 //display:none
                 response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
             }
 
-            request.getServletContext().getRequestDispatcher("/views/details.jsp").forward(request, response);
+           // request.getServletContext().getRequestDispatcher("/views/details.jsp").forward(request, response);
 
 /*
 

@@ -1,5 +1,8 @@
 package at.ac.tuwien.big.we16.ue2.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vanessa on 15.04.16.
  */
@@ -11,6 +14,7 @@ public class Auction {
     private String ablaufdatum;
     private String hoechstbietender;
     private double hoechstgebot;
+    private List<User> user = new ArrayList<>();
 
     public Auction() {}
 
@@ -78,5 +82,13 @@ public class Auction {
 
     public void setAblaufdatum(String ablaufdatum) {
         this.ablaufdatum = ablaufdatum;
+    }
+
+    public void addUser(User user) {
+        this.user.add(user);
+    }
+
+    public void removeUser(User user) {
+        this.user.remove(user);
     }
 }

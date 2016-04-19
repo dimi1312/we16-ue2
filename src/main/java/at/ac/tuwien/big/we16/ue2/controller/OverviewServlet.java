@@ -24,7 +24,6 @@ public class OverviewServlet extends HttpServlet {
         HttpSession session = null;
         session = req.getSession();
         session.setAttribute("product",p);
-      //  session.setAttribute("product", new Product("Californication","red_hot_chili_peppers.png",45));
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
         dispatcher.forward(req,resp);
     }

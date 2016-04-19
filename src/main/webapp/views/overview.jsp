@@ -29,8 +29,8 @@
         }
         function print() {
             if(typeof(Storage) !== "undefined") {
-             /*   document.getElementById("recently-viewed-headline").style.display = "initial";
-                document.getElementById("recently-viewed-list").style.display = "initial";*/
+               /* document.getElementById("reViewHeadline").style.display = "initial";
+                document.getElementById("reViewList").style.display = "initial";*/
                 document.getElementById("first").innerHTML = localStorage.last1;
                 document.getElementById("first").href = localStorage.href1;
                 document.getElementById("second").innerHTML = localStorage.last2;
@@ -53,7 +53,7 @@
         }
     </script>
 </head>
-<body data-decimal-separator="," data-grouping-separator="."  onload="print()">
+<body data-decimal-separator="," data-grouping-separator="." onload="print()">
 
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
@@ -101,11 +101,11 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3>Zuletzt angesehen</h3>
-            <ul>
-                <li><a id="first" href=""></a></li>
-                <li><a id="second" href=""></a></li>
-                <li><a id="third" href=""></a></li>
+            <h3 class="reViewHeadline">Zuletzt angesehen</h3>
+            <ul class="reViewList">
+                <li class="recently-viewed-link"><a id="first" href=""></a></li>
+                <li class="recently-viewed-link"><a id="second" href=""></a></li>
+                <li class="recently-viewed-link"><a id="third" href=""></a></li>
             </ul>
         </div>
     </aside>

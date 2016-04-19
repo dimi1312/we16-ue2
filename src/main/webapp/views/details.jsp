@@ -10,7 +10,7 @@
     <script type="text/javascript">
         var request = null;
         request = new XMLHttpRequest();
-        request.open("POST", "/../../controller/BietenServlet", true);
+        request.open("GET", "/../../controller/BietenServlet", true);
         request.onreadystatechange = stateChanged;
 
         function bieten() {
@@ -26,13 +26,13 @@
                 case 4: // done
                     if(request.status == 200) {
                         var display = document.getElementById("bid-error");
-                        var actcount = document.getElementById("name");
-                        var kontostand = document.getElementById("name");
+                        var artcount = document.getElementById("laufende_Auktionen");
+                        var kontostand = document.getElementById("konto_stand");
 
                         var json = JSON.parse(request.responseText);
 
                         display.style.display=json.display;
-                        actcount.style.display=json.auktionen;
+                        artcount.style.display=json.auktionen;
                         kontostand.style.display=json.kontostand;
                     }
                     break;
@@ -69,11 +69,11 @@
                 <dd class="user-name"><%=user.getUsername()%></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance"><%=user.getMoney()%> &euro;</span>
+                    <span id="konto_stand"  class="balance"><%=user.getMoney()%> &euro;</span>
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
-                    <span class="running-auctions-count"><%=user.getAuctions()%></span>
+                    <span id="laufende_Auktionen" class="running-auctions-count"><%=user.getAuctions()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Gewonnen:</dt>
@@ -111,7 +111,7 @@
             <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time=<%=product.getAblaufdatum()%>
                                                   ></span>
             </p>
-            <form class="bid-form" method="post" action="/../../controller/BietenServlet">
+            <form class="bid-form" method="post" action="/../../controller/BietenServlet" id="ajax_form">
                 <label class="bid-form-field" id="highest-price">
                     <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span>
                     <span class="highest-bidder"><%=product.getHoechstbietender()%></span>
@@ -121,7 +121,7 @@
                        name="new-price" required>
                 <p id="bid-error" class="bid-error">Es gibt bereits ein höheres Gebot oder der Kontostand ist zu
                     niedrig.</p>
-                <input type="submit" id="submit-price" class="bid-form-field button" name="submit-price" value="Bieten">
+                <input id="submit-price" type="submit" class="bid-form-field button" name="submit-price" value="Bieten">
             </form>
         </div>
     </main>
