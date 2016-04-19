@@ -1,5 +1,6 @@
 package at.ac.tuwien.big.we16.ue2.controller;
 
+import at.ac.tuwien.big.we16.ue2.beans.Auction;
 import at.ac.tuwien.big.we16.ue2.beans.Sortiment;
 import at.ac.tuwien.big.we16.ue2.beans.User;
 
@@ -29,6 +30,13 @@ public class BietenServlet extends HttpServlet{
             HttpSession session = request.getSession(true);
 
             double gebotener_preis = Double.parseDouble(request.getParameter("new-price"));
+            //Sortiment s = (Sortiment) this.getServletContext().getAttribute("sortiment");
+
+            Auction a = (Auction) session.getAttribute("aktAuct");
+            request.setAttribute("fuerMax", 2);
+
+
+            request.getServletContext().getRequestDispatcher("/views/details.jsp").forward(request, response);
 
 /*
 

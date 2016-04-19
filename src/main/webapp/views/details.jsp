@@ -1,5 +1,5 @@
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.beans.User" scope="session" />
-<jsp:useBean id="product" class="at.ac.tuwien.big.we16.ue2.beans.Auction" scope="session" />
+<jsp:useBean beanName="aktAuct" id="product" class="at.ac.tuwien.big.we16.ue2.beans.Auction" scope="session"/>
 <!doctype html>
 <html lang="de">
 <head>
@@ -113,7 +113,8 @@
                 <label class="accessibility" for="new-price"></label>
                 <input type="number" step="0.01" min="0" id="new-price" class="bid-form-field form-input"
                        name="new-price" required>
-                <p class="bid-error">Es gibt bereits ein höheres Gebot oder der Kontostand ist zu niedrig.</p>
+                <p id="bid-error" class="bid-error">Es gibt bereits ein höheres Gebot oder der Kontostand ist zu
+                    niedrig.</p>
                 <input type="submit" id="submit-price" class="bid-form-field button" name="submit-price" value="Bieten">
             </form>
         </div>
