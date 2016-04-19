@@ -20,6 +20,14 @@
         <servlet-name>OverviewServlet</servlet-name>
         <url-pattern>/controller/OverviewServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>BietenServlet</servlet-name>
+        <servlet-class>at.ac.tuwien.big.we16.ue2.controller.BietenServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BietenServlet</servlet-name>
+        <url-pattern>/controller/BietenServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

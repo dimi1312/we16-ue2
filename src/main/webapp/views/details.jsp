@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body data-decimal-separator="," data-grouping-separator=".">
-hier neu
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
 <header aria-labelledby="bannerheadline">
@@ -78,7 +77,7 @@ hier neu
             <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time=<%=product.getAblaufdatum()%>
                                                   ></span>
             </p>
-            <form class="bid-form" method="post" action="">
+            <form class="bid-form" method="post" action="/../../controller/BietenServlet">
                 <label class="bid-form-field" id="highest-price">
                     <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span>
                     <span class="highest-bidder"><%=product.getHoechstbietender()%></span>
