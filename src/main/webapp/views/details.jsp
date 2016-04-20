@@ -8,30 +8,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
         <script type="text/javascript">
-        var request = null;
-        function getAnswer() {
-            request = new XMLHttpRequest();
-            request.open("Post", "/../../controller/BietenServlet", true);
-            request.onreadystatechange = stateChanged;
-            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            request.send("price=".concat(document.getElementById("price").value));
-        }
-        function stateChanged() {
-            switch(request.readyState) {
-                case 0: break; // unsent
-                case 1: break; // opened
-                case 2: break; // sent
-                case 3: break; // loading
-                case 4: // done
-                    if(request.status == 200) {
-                        var konto = document.getElementById("konto_stand");
-                        var json = JSON.parse(request.responseText);
-                        konto.firstChild.nodeValue = json.price;
-                    }
-                    break;
-            }
-        }
-    </script>
+                   function getAnswer() {
+                       dataString = $('#ajax_form').serialize();
+                       $.ajax({
+                           type: "POST",
+                           url: "/../../controller/BietenServlet",
+                           data: dataString,
+                           dataType: "json",
+                           success: function (result) {
+                               //if success lets get our json array
+                               alert("result");
+                               //print it
+                               //loop
+                               $.each(result, function(index, val) {
+                                   var konto = document.getElementById("konto_stand");
+                                   konto.firstChild.nodeValue = val;
+                               });
+                           }
+                       });
+                   }
+        </script>
 </head>
 <body data-decimal-separator="," data-grouping-separator=".">
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>

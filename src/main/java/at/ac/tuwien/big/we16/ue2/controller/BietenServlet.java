@@ -29,16 +29,13 @@ public class BietenServlet extends HttpServlet{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String n = request.getParameter("price");
-        response.setContentType("application/json");
-        response.getWriter().write("{\"price\":\"" + n + "\"}");
-       /* HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         double gebotener_preis = Double.parseDouble(request.getParameter("price"));
         Auction a = (Auction) session.getAttribute("product");
         User u = (User) session.getAttribute("user");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"price\": \"1400\"}");*//*
+        response.getWriter().write("{\"price\": \"1400\"}");/*
         if("Bieten".equals(request.getParameter("submit-price"))) {
             HttpSession session = request.getSession();
             double gebotener_preis = Double.parseDouble(request.getParameter("new-price"));
