@@ -3,14 +3,17 @@ package at.ac.tuwien.big.we16.ue2.controller;
 import at.ac.tuwien.big.we16.ue2.beans.Auction;
 import at.ac.tuwien.big.we16.ue2.beans.Sortiment;
 import at.ac.tuwien.big.we16.ue2.beans.User;
+import javafx.scene.control.Alert;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
 /**
  * Created by Dimi on 19.04.2016.
  */
+@WebServlet(name="/controller/BietenServlet", urlPatterns={"/controller/BietenServlet"})
 public class BietenServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,44 +29,30 @@ public class BietenServlet extends HttpServlet{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String n = request.getParameter("price");
+        response.setContentType("application/json");
+        response.getWriter().write("{\"price\":\"" + n + "\"}");
+       /* HttpSession session = request.getSession();
+        double gebotener_preis = Double.parseDouble(request.getParameter("price"));
+        Auction a = (Auction) session.getAttribute("product");
+        User u = (User) session.getAttribute("user");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"price\": \"1400\"}");*//*
         if("Bieten".equals(request.getParameter("submit-price"))) {
-            HttpSession session = request.getSession(true);
-
+            HttpSession session = request.getSession();
             double gebotener_preis = Double.parseDouble(request.getParameter("new-price"));
-            //Sortiment s = (Sortiment) this.getServletContext().getAttribute("sortiment");
-
             Auction a = (Auction) session.getAttribute("product");
             User u = (User) session.getAttribute("user");
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("utf-8");
-            //Diskussionsnotiz: Bei der Auktion die User speichern -> dadurch auch alle die notfied werden.
+         //   response.setContentType("application/json");
+         //   response.setCharacterEncoding("utf-8");
             if (a.getHoechstgebot() >= gebotener_preis) {
-                //return gebot ist niedriger -> display: block
-               // response.getWriter().write("{auktionen: " + u.getAuctions() + ", kontostand: " + u.getMoney() + ", display:block}");
-                response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
-            } else {
-                //display:none
-                response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
+             //   response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
+            } else {// response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
             }
-
-           // request.getServletContext().getRequestDispatcher("/views/details.jsp").forward(request, response);
-
-/*
-
-            if (!"".equals(name) && !"".equals(passwort)) {
-                User user = new User(request.getParameter("email"), request.getParameter("password"));
-                session.setAttribute("user", user);
-                Sortiment sortiment = (Sortiment)session.getAttribute("sortiment");
-                if(sortiment == null) {
-                    sortiment = new Sortiment();
-                    // session.setAttribute("sortiment", sortiment);
-                    this.getServletContext().setAttribute("sortiment", sortiment);
-                }
-                Cookie cookie = new Cookie("sessionId", session.getId());
-                response.addCookie(cookie);
-                request.getServletContext().getRequestDispatcher("/views/overview.jsp").forward(request, response);
-            }*/
-        }
+           response.setContentType("text/plain");
+           response.setCharacterEncoding("UTF-8");
+           response.getWriter().write(String.valueOf(1400));
+        }*/
     }
 }

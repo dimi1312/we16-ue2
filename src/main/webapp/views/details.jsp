@@ -7,39 +7,30 @@
     <title>BIG Bid - Der Pate (Film)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
-    <script type="text/javascript">
+        <script type="text/javascript">
         var request = null;
-        request = new XMLHttpRequest();
-        request.open("GET", "/../../controller/BietenServlet", true);
-        request.onreadystatechange = stateChanged;
-
-        function bieten() {
-            request.send(null);
+        function getAnswer() {
+            request = new XMLHttpRequest();
+            request.open("Post", "/../../controller/BietenServlet", true);
+            request.onreadystatechange = stateChanged;
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send("price=".concat(document.getElementById("price").value));
         }
         function stateChanged() {
-            switch(request.readyState)
-            {
+            switch(request.readyState) {
                 case 0: break; // unsent
                 case 1: break; // opened
                 case 2: break; // sent
                 case 3: break; // loading
                 case 4: // done
                     if(request.status == 200) {
-                        var display = document.getElementById("bid-error");
-                        var artcount = document.getElementById("laufende_Auktionen");
-                        var kontostand = document.getElementById("konto_stand");
-
+                        var konto = document.getElementById("konto_stand");
                         var json = JSON.parse(request.responseText);
-
-                        display.style.display=json.display;
-                        artcount.style.display=json.auktionen;
-                        kontostand.style.display=json.kontostand;
+                        konto.firstChild.nodeValue = json.price;
                     }
                     break;
             }
         }
-
-
     </script>
 </head>
 <body data-decimal-separator="," data-grouping-separator=".">
@@ -109,19 +100,19 @@
                 </p>
             </div>
             <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time=<%=product.getAblaufdatum()%>
-                                                  ></span>
+            ></span>
             </p>
-            <form class="bid-form" method="post" action="/../../controller/BietenServlet" id="ajax_form">
+            <form class="bid-form" method="post" id="ajax_form">
                 <label class="bid-form-field" id="highest-price">
                     <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span>
                     <span class="highest-bidder"><%=product.getHoechstbietender()%></span>
                 </label>
-                <label class="accessibility" for="new-price"></label>
-                <input type="number" step="0.01" min="0" id="new-price" class="bid-form-field form-input"
-                       name="new-price" required>
+                <label class="accessibility" for="price"></label>
+                <input type="number" step="0.01" min="0" id="price" class="bid-form-field form-input"
+                       name="price" required>
                 <p id="bid-error" class="bid-error">Es gibt bereits ein höheres Gebot oder der Kontostand ist zu
                     niedrig.</p>
-                <input id="submit-price" type="submit" class="bid-form-field button" name="submit-price" value="Bieten">
+                <input id="submit-price" type="button" class="bid-form-field button" name="submit-price" value="Bieten" onclick="getAnswer();">
             </form>
         </div>
     </main>

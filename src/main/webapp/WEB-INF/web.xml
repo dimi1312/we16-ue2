@@ -20,20 +20,12 @@
         <servlet-name>OverviewServlet</servlet-name>
         <url-pattern>/controller/OverviewServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>BietenServlet</servlet-name>
-        <servlet-class>at.ac.tuwien.big.we16.ue2.controller.BietenServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BietenServlet</servlet-name>
-        <url-pattern>/controller/BietenServlet</url-pattern>
-    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
-    </welcome-file-list>
 </web-app>
