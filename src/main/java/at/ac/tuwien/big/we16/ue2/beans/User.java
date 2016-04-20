@@ -15,7 +15,7 @@ public class User {
     private int lost = 0;
 
     public User() {
-        this.username ="NaN";
+        this.username ="";
         this.password = "";
         this.money = 0.0;
     }

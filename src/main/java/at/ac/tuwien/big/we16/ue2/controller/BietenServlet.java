@@ -29,13 +29,25 @@ public class BietenServlet extends HttpServlet{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        double gebotener_preis = Double.parseDouble(request.getParameter("price"));
-        Auction a = (Auction) session.getAttribute("product");
-        User u = (User) session.getAttribute("user");
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("{\"price\": \"1400\"}");/*
+            HttpSession session = request.getSession();
+            double gebotener_preis = Double.parseDouble(request.getParameter("price"));
+            Auction a = (Auction) session.getAttribute("product");
+            User u = (User) session.getAttribute("user");
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            if(gebotener_preis > a.getHoechstgebot()) {
+                u.setMoney(u.getMoney() - gebotener_preis);
+                if(!a.containsUser(u)) {
+                    u.setAuctions(u.getAuctions() + 1);
+                    a.addUser(u);
+                }
+                User loser = a.getHoechstbietender();
+                loser.setMoney(loser.getMoney() + a.getHoechstgebot());
+                a.setHoechstbietender(u);
+                a.setHoechstgebot(gebotener_preis);
+            }
+            response.getWriter().write("{\"price\": \""+u.getMoney()+"\", \"anzahl\": \""+u.getAuctions()+"\"}");
+                /*
         if("Bieten".equals(request.getParameter("submit-price"))) {
             HttpSession session = request.getSession();
             double gebotener_preis = Double.parseDouble(request.getParameter("new-price"));

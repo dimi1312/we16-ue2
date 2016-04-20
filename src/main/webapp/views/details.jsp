@@ -16,13 +16,15 @@
                            data: dataString,
                            dataType: "json",
                            success: function (result) {
-                               //if success lets get our json array
                                alert("result");
-                               //print it
-                               //loop
                                $.each(result, function(index, val) {
-                                   var konto = document.getElementById("konto_stand");
-                                   konto.firstChild.nodeValue = val;
+                                   if(index == "price") {
+                                       var konto = document.getElementById("konto_stand");
+                                       konto.firstChild.nodeValue = val;
+                                   } else {
+                                       var auktionen = document.getElementById("laufende_Auktionen");
+                                       auktionen.firstChild.nodeValue = val;
+                                   }
                                });
                            }
                        });
@@ -92,7 +94,7 @@
                     Diese Auktion ist bereits abgelaufen.
                     Das Produkt wurde um
                     <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span> an
-                    <span class="highest-bidder"><%=product.getHoechstbietender()%></span> verkauft.
+                    <span class="highest-bidder"><%=product.getHoechstbietender().getUsername()%></span> verkauft.
                 </p>
             </div>
             <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time=<%=product.getAblaufdatum()%>
@@ -101,7 +103,7 @@
             <form class="bid-form" method="post" id="ajax_form">
                 <label class="bid-form-field" id="highest-price">
                     <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span>
-                    <span class="highest-bidder"><%=product.getHoechstbietender()%></span>
+                    <span class="highest-bidder"><%=product.getHoechstbietender().getUsername()%></span>
                 </label>
                 <label class="accessibility" for="price"></label>
                 <input type="number" step="0.01" min="0" id="price" class="bid-form-field form-input"

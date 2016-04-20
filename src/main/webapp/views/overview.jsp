@@ -128,7 +128,7 @@
                             <dd data-end-time=<%=p.getAblaufdatum()%> data-end-text="abgelaufen"
                                 class="product-time js-time-left"></dd>
                             <dt>Höchstbietende/r</dt>
-                            <dd class="product-highest"><%=p.getHoechstbietender()%></dd>
+                            <dd class="product-highest"><%=p.getHoechstbietender().getUsername()%></dd>
                         </dl>
                     </a>
                 </div>

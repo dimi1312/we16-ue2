@@ -12,7 +12,7 @@ public class Auction {
     private String img;
     private double preis;
     private String ablaufdatum;
-    private String hoechstbietender;
+    private User hoechstbietender;
     private double hoechstgebot;
     private List<User> user = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class Auction {
         this.setImg(img);
         this.preis = preis;
         this.ablaufdatum = ablaufdatum;
-        this.hoechstbietender = "";
+        this.hoechstbietender = new User();
         this.hoechstgebot = 0.0;
     }
 
@@ -52,11 +52,11 @@ public class Auction {
         this.preis = preis;
     }
 
-    public String getHoechstbietender() {
+    public User getHoechstbietender() {
         return hoechstbietender;
     }
 
-    public void setHoechstbietender(String hoechstbietender) {
+    public void setHoechstbietender(User hoechstbietender) {
         this.hoechstbietender = hoechstbietender;
     }
 
@@ -90,5 +90,9 @@ public class Auction {
 
     public void removeUser(User user) {
         this.user.remove(user);
+    }
+
+    public boolean containsUser(User user) {
+        return this.user.contains(user);
     }
 }
