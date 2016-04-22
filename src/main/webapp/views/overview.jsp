@@ -9,6 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
     <script>
+        var socket = new WebSocket("ws://localhost:8080/socket");
+        socket.onmessage = function(evt) {
+            var parsedData = JSON.parse(evt.data);
+            if(parsedData.typeMsg == "newGebot") {
+                var auction = document.getElementById(parsedData.product_id.concat("gebot"));
+                auction.firstChild.nodeValue = parsedData.price;
+                var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
+                bieter.firstChild.nodeValue = parsedData.user;
+            } else if(parsedData.typeMsg == "ueberboten") {
+                 var balance = document.getElementById("balance");
+                balance.firstChild.nodeValue = parsedData.balance;
+            }
+        }
+
         if(localStorage.last1 == null) {
             localStorage.last1 = "";
         }
@@ -81,7 +95,7 @@
                 <dd class="user-name"><%=user.getUsername()%></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance"><%=user.getMoney()%> &euro;</span>
+                    <span class="balance" id="balance"><%=user.getMoney()%> &euro;</span>
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
@@ -113,22 +127,22 @@
         <h2 class="main-headline" id="productsheadline">Produkte</h2>
         <div class="products">
             <% for (Auction p : sortiment.getAuction()) { %>
-                <div class="product-outer" data-product-id=<%=p.getId()%>>
-                    <a name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getBezeichnung()%>" onclick="clickCounter(this);" class="product highlight"
-                       title="Mehr Informationen">
-                        <img class="product-image" src=<%=p.getImg()%> alt="">
+                <div class="product-outer" data-product-id="<%=p.getId()%>">
+                    <a name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getBezeichnung()%>" onclick="clickCounter(this);"
+                       class="product highlight" title="Mehr Informationen">
+                        <img class="product-image" src="<%=p.getImg()%>" alt="">
                         <dl class="product-properties properties">
                             <dt>Bezeichnung</dt>
                             <dd class="product-name"><%=p.getBezeichnung()%></dd>
                             <dt>Preis</dt>
-                            <dd class="product-price">
-                                <%=p.getPreis()%> &euro;
+                            <dd class="product-price" id="<%=p.getId()%>gebot">
+                                <%=p.getHoechstgebot()%> &euro;
                             </dd>
                             <dt>Verbleibende Zeit</dt>
-                            <dd data-end-time=<%=p.getAblaufdatum()%> data-end-text="abgelaufen"
+                            <dd data-end-time="<%=p.getAblaufdatum()%>" data-end-text="abgelaufen"
                                 class="product-time js-time-left"></dd>
                             <dt>Höchstbietende/r</dt>
-                            <dd class="product-highest"><%=p.getHoechstbietender().getUsername()%></dd>
+                            <dd class="product-highest" id="<%=p.getId()%>bieter"><%=p.getHoechstbietender().getUsername()%></dd>
                         </dl>
                     </a>
                 </div>

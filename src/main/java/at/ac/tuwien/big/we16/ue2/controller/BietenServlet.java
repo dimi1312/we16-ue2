@@ -3,6 +3,7 @@ package at.ac.tuwien.big.we16.ue2.controller;
 import at.ac.tuwien.big.we16.ue2.beans.Auction;
 import at.ac.tuwien.big.we16.ue2.beans.Sortiment;
 import at.ac.tuwien.big.we16.ue2.beans.User;
+import at.ac.tuwien.big.we16.ue2.service.ServiceFactory;
 import javafx.scene.control.Alert;
 
 import javax.servlet.ServletException;
@@ -35,7 +36,10 @@ public class BietenServlet extends HttpServlet{
             User u = (User) session.getAttribute("user");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            if(gebotener_preis > a.getHoechstgebot()) {
+            String status = "success";
+            if((u.getMoney() - gebotener_preis) < 0 || gebotener_preis < a.getHoechstgebot()) {
+                status = "error";
+            } else {
                 u.setMoney(u.getMoney() - gebotener_preis);
                 if(!a.containsUser(u)) {
                     u.setAuctions(u.getAuctions() + 1);
@@ -43,25 +47,13 @@ public class BietenServlet extends HttpServlet{
                 }
                 User loser = a.getHoechstbietender();
                 loser.setMoney(loser.getMoney() + a.getHoechstgebot());
+                ServiceFactory.getNotifierService().ueberboten(loser, loser.getMoney());
                 a.setHoechstbietender(u);
                 a.setHoechstgebot(gebotener_preis);
+                ServiceFactory.getNotifierService().gebotAbgegeben(a, u, gebotener_preis);
             }
-            response.getWriter().write("{\"price\": \""+u.getMoney()+"\", \"anzahl\": \""+u.getAuctions()+"\"}");
-                /*
-        if("Bieten".equals(request.getParameter("submit-price"))) {
-            HttpSession session = request.getSession();
-            double gebotener_preis = Double.parseDouble(request.getParameter("new-price"));
-            Auction a = (Auction) session.getAttribute("product");
-            User u = (User) session.getAttribute("user");
-         //   response.setContentType("application/json");
-         //   response.setCharacterEncoding("utf-8");
-            if (a.getHoechstgebot() >= gebotener_preis) {
-             //   response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
-            } else {// response.getWriter().write("{\"auktionen\": \"" + u.getAuctions() + "\", \"kontostand\": \"" + u.getMoney() + "\", \"display\":\"none\"}");
-            }
-           response.setContentType("text/plain");
-           response.setCharacterEncoding("UTF-8");
-           response.getWriter().write(String.valueOf(1400));
-        }*/
+
+        response.getWriter().write("{\"price\": \""+u.getMoney()+"\", \"anzahl\": \""+u.getAuctions()+"\", \"status\": \"" + status +"\"}");
+
     }
 }

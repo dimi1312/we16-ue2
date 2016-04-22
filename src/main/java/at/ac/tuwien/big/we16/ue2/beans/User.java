@@ -15,7 +15,7 @@ public class User {
     private int lost = 0;
 
     public User() {
-        this.username ="";
+        this.username ="kein Gebot";
         this.password = "";
         this.money = 0.0;
     }

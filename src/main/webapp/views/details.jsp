@@ -8,6 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
         <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:8080/socket");
+            socket.onmessage = function(evt) {
+                var parsedData = JSON.parse(evt.data);
+                if(parsedData.typeMsg == "newGebot") {
+                    var auction = document.getElementById("gebot");
+                    auction.firstChild.nodeValue = parsedData.price;
+                    var bieter = document.getElementById("bieter");
+                    bieter.firstChild.nodeValue = parsedData.user;
+                } else if(parsedData.typeMsg == "ueberboten") {
+                    var balance = document.getElementById("konto_stand");
+                    balance.firstChild.nodeValue = parsedData.balance;
+                }
+            }
                    function getAnswer() {
                        dataString = $('#ajax_form').serialize();
                        $.ajax({
@@ -16,11 +29,16 @@
                            data: dataString,
                            dataType: "json",
                            success: function (result) {
-                               alert("result");
                                $.each(result, function(index, val) {
                                    if(index == "price") {
                                        var konto = document.getElementById("konto_stand");
                                        konto.firstChild.nodeValue = val;
+                                   } else if(index == "status") {
+                                       alert("status");
+                                       var anzeige = document.getElementById("bid-error");
+                                       if(val == "error") {
+                                       } else {
+                                       }
                                    } else {
                                        var auktionen = document.getElementById("laufende_Auktionen");
                                        auktionen.firstChild.nodeValue = val;
@@ -97,13 +115,14 @@
                     <span class="highest-bidder"><%=product.getHoechstbietender().getUsername()%></span> verkauft.
                 </p>
             </div>
-            <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time=<%=product.getAblaufdatum()%>
+            <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time="<%=product.getAblaufdatum()%>"
             ></span>
             </p>
             <form class="bid-form" method="post" id="ajax_form">
+                <input type="hidden" value="<%=product.getId()%>" id="product_id"/>
                 <label class="bid-form-field" id="highest-price">
-                    <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span>
-                    <span class="highest-bidder"><%=product.getHoechstbietender().getUsername()%></span>
+                    <span class="highest-bid" id="gebot"><%=product.getHoechstgebot()%> &euro;</span>
+                    <span class="highest-bidder" id="bieter"><%=product.getHoechstbietender().getUsername()%></span>
                 </label>
                 <label class="accessibility" for="price"></label>
                 <input type="number" step="0.01" min="0" id="price" class="bid-form-field form-input"

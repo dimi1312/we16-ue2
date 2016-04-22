@@ -349,10 +349,12 @@ footer {
 }
 
 .bid-error {
-    display: none;
+  /*  display: none;*/
     color: red;
     margin: 6px;
 }
+
+
 
 @media (min-width: 400px) {
     .form-row {

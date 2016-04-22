@@ -1,5 +1,12 @@
 package at.ac.tuwien.big.we16.ue2.service;
 
+import at.ac.tuwien.big.we16.ue2.beans.Auction;
+import at.ac.tuwien.big.we16.ue2.beans.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.util.Map;
@@ -9,6 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class NotifierService {
     private static Map<Session, HttpSession> clients = new ConcurrentHashMap<>();
+    private static Map<HttpSession,User> userList = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executor;
 
     public NotifierService() {
@@ -27,6 +35,30 @@ public class NotifierService {
      */
     public void register(Session socketSession, HttpSession httpSession) {
         clients.put(socketSession, httpSession);
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userList.put(httpSession,user);
+
+        }
+    }
+    public void ueberboten(User user, double gutschrift) {
+        String message = "{\"typeMsg\": \"ueberboten\", \"balance\": \"" + gutschrift + "\"}";
+        for(Session session : clients.keySet()) {
+           if(user.equals(userList.get(clients.get(session)))) {
+                session.getAsyncRemote().sendText(message);
+            }
+        }
+    }
+    public void gebotAbgegeben(Auction auction, User highestBidder, double price) {
+        String message = "{\"typeMsg\": \"newGebot\", \"product_id\": \"" + auction.getId() +"\",\"user\": \"" + highestBidder.getUsername() +"\",\"price\": \""+price+"\"}";
+        this.sendMessageToAllUsers(message);
+    }
+
+    public void sendMessageToAllUsers(String message) {
+        for(Session session : clients.keySet()) {
+            session.getAsyncRemote().sendText(message);
+        }
+
     }
 
     public void unregister(Session userSession) {
