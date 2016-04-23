@@ -15,6 +15,7 @@ public class Auction {
     private User hoechstbietender;
     private double hoechstgebot;
     private List<User> user = new ArrayList<>();
+    private boolean expired = false;
 
     public Auction() {}
 
@@ -31,7 +32,12 @@ public class Auction {
     public String getBezeichnung() {
         return bezeichnung;
     }
-
+    public void setExpired() {
+        this.expired = true;
+    }
+    public boolean isExpired() {
+        return this.expired;
+    }
     public void setBezeichnung(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }

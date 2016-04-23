@@ -13,6 +13,8 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.*;
@@ -26,6 +28,7 @@ public class NotifierService {
     private Sortiment sortiment;
     private Random random = new Random();
     private User user;
+    private Map<LocalDateTime, List<Auction>> checkAblauf = new ConcurrentHashMap<>();
 
     public NotifierService() {
         // Use the scheduled executor to regularly check for recently expired auctions
@@ -40,36 +43,86 @@ public class NotifierService {
         this.user = new User();
         this.user.setUsername("Computer");
     }
+
+    public void formatAblaufCheck() {
+        for(Auction a : sortiment.getAuction()) {
+            LocalDateTime time = LocalDateTime.parse(a.getAblaufdatum(), format);
+            List<Auction> auctions = null;
+            if(!checkAblauf.containsKey(time)) {
+                auctions = new ArrayList<>();
+                auctions.add(a);
+                checkAblauf.put(time, auctions);
+            } else {
+                checkAblauf.get(time).add(a);
+            }
+        }
+    }
+    /*
     public void startAuctionEndWatcher() {
-      /*  final Runnable checkAuctions = new Runnable() {
+        final Runnable checkAuctions = new Runnable() {
             public void run() {
-                for(Auction a : sortiment.getAuction()) {
-                    if(a.getBezeichnung().equals("Reload")) {
-                        System.out.println("Check");
-                        if (LocalDateTime.now().isAfter(LocalDateTime.parse(a.getAblaufdatum(),format))) {
-                            User winner = a.getHoechstbietender();
-                            a.removeUser(winner);
-                            winner.setWon(winner.getWon()+1);
-                            winner.setAuctions(winner.getAuctions()-1);
-                            for(User loser : a.getTeilnehmer()) {
-                                loser.setAuctions(loser.getAuctions()-1);
-                                loser.setLost(loser.getLost()+1);
+                for(LocalDateTime time : checkAblauf.keySet()) {
+                        if (LocalDateTime.now().isAfter(time)) {
+                            for(Auction a : checkAblauf.get(time)) {
+                                if(!a.isExpired()) {
+                                    synchronized (a) {
+                                        User winner = a.getHoechstbietender();
+                                        synchronized (winner) {
+                                            a.removeUser(winner);
+                                            winner.removeAuction();
+                                            winner.addWon();
+                                        }
+                                        for (User loser : a.getTeilnehmer()) {
+                                            synchronized (loser) {
+                                                loser.removeAuction();
+                                                loser.addLost();
+                                            }
+                                        }
+                                        a.setExpired();
+                                    }
+                                    auctionEnd();
+                                }
                             }
-                            auctionEnd();
                         }
                     }
+                }
+        };
+        final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 1,1, TimeUnit.SECONDS);
+    }*/
 
+    public void startAuctionEndWatcher() {
+        final Runnable checkAuctions = new Runnable() {
+            public void run() {
+                for(Auction a : sortiment.getAuction()) {
+                        if (LocalDateTime.now().isAfter(LocalDateTime.parse(a.getAblaufdatum(), format)) && !a.isExpired()) {
+                            synchronized (a) {
+                                User winner = a.getHoechstbietender();
+                                synchronized (winner) {
+                                    a.removeUser(winner);
+                                    winner.removeAuction();
+                                    winner.addWon();
+                                }
+                                for (User loser : a.getTeilnehmer()) {
+                                    synchronized (loser) {
+                                        loser.removeAuction();
+                                        loser.addLost();
+                                    }
+                                }
+                                a.setExpired();
+                            }
+                            auctionEnd(a);
+                        }
                 }
             }
         };
-        final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 1,1, TimeUnit.SECONDS);*/
+        final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 1,1, TimeUnit.SECONDS);
     }
     public void startComputerUser() {
         final Runnable computer = new Runnable() {
             public void run() {
                 for(Auction auction : sortiment.getAuction()) {
                     int wahrscheinlichkeit = random.nextInt(101);
-                    if(wahrscheinlichkeit <= 30) {
+                    if(wahrscheinlichkeit <= 30 && !auction.isExpired()) {
                         synchronized (auction) {
                             User loser = auction.getHoechstbietender();
                             synchronized (loser) {
@@ -106,11 +159,14 @@ public class NotifierService {
     }
     //bei allen Usern der Auction muss bei Ablauf laufend umgesetzt werden
     //sowie gewonnen bzw verloren veraendert werden
-    public void auctionEnd() {
+    public void auctionEnd(Auction a) {
         for(Session session : clients.keySet()) {
             User user = userList.get(clients.get(session));
             if(user != null) {
-                String message = "{\"typeMsg\": \"endAuction\", \"balance\": \"" + user.getMoney() + "\", \"anzahl\": \"" + user.getAuctions() + "\", \"won\": \"" + user.getWon() + "\", \"lost\": \"" + user.getLost() + "\"}";
+                String message;
+                synchronized(user) {
+                    message = "{\"typeMsg\": \"endAuction\", \"product_id\": \"" + a.getId() +"\",\"balance\": \"" + user.getMoney() + "\", \"anzahl\": \"" + user.getAuctions() + "\", \"won\": \"" + user.getWon() + "\", \"lost\": \"" + user.getLost() + "\"}";
+                }
                 session.getAsyncRemote().sendText(message);
             }
         }

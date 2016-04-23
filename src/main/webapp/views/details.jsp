@@ -18,12 +18,29 @@
                 var parsedData = JSON.parse(evt.data);
                 if(parsedData.typeMsg == "newGebot") {
                     var auction = document.getElementById(parsedData.product_id.concat("gebot"));
+                    document.getElementById(parsedData.product_id.concat("gebot2")).firstChild.nodeValue = parsedData.price;
                     auction.firstChild.nodeValue = parsedData.price;
                     var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
+                    document.getElementById(parsedData.product_id.concat("bieter2")).firstChild.nodeValue = parsedData.user;
                     bieter.firstChild.nodeValue = parsedData.user;
                 } else if(parsedData.typeMsg == "ueberboten") {
                     var balance = document.getElementById("konto_stand");
                     balance.firstChild.nodeValue = parsedData.balance;
+                } else if(parsedData.typeMsg == "endAuction") {
+                    var konto = document.getElementById("konto_stand");
+                    konto.firstChild.nodeValue = parsedData.balance;
+                    var auktionen = document.getElementById("laufende_Auktionen");
+                    auktionen.firstChild.nodeValue = parsedData.anzahl;
+                    document.getElementById("won").firstChild.nodeValue = parsedData.won;
+                    document.getElementById("lost").firstChild.nodeValue= parsedData.lost;
+                    if(document.getElementById("product_id").value == parsedData.product_id) {
+                    var exp = document.getElementById("exp");
+                    var rest = document.getElementById("restzeit");
+                    var form = document.getElementById("ajax_form");
+                        form.style.display = 'none';
+                        exp.style.display = 'block';
+                        rest.style.display = 'none';
+                    }
                 }
             }
                    function getAnswer() {
@@ -116,12 +133,12 @@
                 </dd>
                 <dt>Gewonnen:</dt>
                 <dd>
-                    <span class="won-auctions-count"><%=user.getWon()%></span>
+                    <span class="won-auctions-count" id="won"><%=user.getWon()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Verloren:</dt>
                 <dd>
-                    <span class="lost-auctions-count"><%=user.getLost()%></span>
+                    <span class="lost-auctions-count" id="lost"><%=user.getLost()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
             </dl>
@@ -142,8 +159,8 @@
                 <p>
                     Diese Auktion ist bereits abgelaufen.
                     Das Produkt wurde um
-                    <span class="highest-bid"><%=product.getHoechstgebot()%> &euro;</span> an
-                    <span class="highest-bidder"><%=product.getHoechstbietender().getUsername()%></span> verkauft.
+                    <span class="highest-bid" id="<%=product.getId()%>gebot2"><%=product.getHoechstgebot()%> &euro;</span> an
+                    <span class="highest-bidder" id="<%=product.getId()%>bieter2"><%=product.getHoechstbietender().getUsername()%></span> verkauft.
                 </p>
             </div>
             <p class="detail-time" id="restzeit">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time="<%=product.getAblaufdatum()%>"

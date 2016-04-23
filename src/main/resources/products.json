@@ -18,7 +18,7 @@
             "img" : "rolling_stones.png",
             "dbpedia": "http://dbpedia.org/page/Forty_Licks",
             "preis": 63.61,
-            "auction_end": "2016,04,18,11,42,23,288"
+            "auction_end": "2016,04,24,00,50,00,000"
 
         },
         {
@@ -29,7 +29,7 @@
             "img" : "metallica.png",
             "dbpedia": "http://dbpedia.org/page/Reload_(Metallica_album)",
             "preis": 83.46,
-            "auction_end": "2016,04,22,22,33,00,289"
+            "auction_end": "2016,04,24,00,52,00,000"
         }
     ],
     "books": [
@@ -51,7 +51,7 @@
             "img" : "1984.png",
             "dbpedia": "http://dbpedia.org/page/Nineteen_Eighty-Four",
             "preis": 202.91,
-            "auction_end": "2016,04,29,16,34,46,296"
+            "auction_end": "2016,04,22,16,34,46,296"
         },
         {
             "product_id": "2797123c-4d71-4dc2-9658-9c24a294f424",
