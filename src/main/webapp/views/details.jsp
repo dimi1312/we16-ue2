@@ -1,5 +1,10 @@
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.beans.User" scope="session" />
 <jsp:useBean id="product" class="at.ac.tuwien.big.we16.ue2.beans.Auction" scope="session"/>
+<%
+    if(user==null||!user.isLoggedIn())
+        response.sendRedirect("/views/login.jsp");
+    else{
+%>
 <!doctype html>
 <html lang="de">
 <head>
@@ -88,7 +93,7 @@
         <h2 class="accessibility" id="navigationheadline">Navigation</h2>
         <ul class="navigation-list">
             <li>
-                <a href="" class="button" accesskey="l">Abmelden</a>
+                <a href="/../../controller/LoginServlet?login=logout" class="button" accesskey="l">Abmelden</a>
             </li>
         </ul>
     </nav>
@@ -168,3 +173,4 @@
 <script src="/scripts/framework.js"></script>
 </body>
 </html>
+<%}%>

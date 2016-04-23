@@ -13,6 +13,7 @@ public class User {
     private int auctions = 0;
     private int won = 0;
     private int lost = 0;
+    boolean loggedIn=false;
 
     public User() {
         this.username ="kein Gebot";
@@ -89,6 +90,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     @Override

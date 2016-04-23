@@ -37,8 +37,11 @@ public class LoginServlet extends HttpServlet{
               String passwort =  request.getParameter("password");
               if (!"".equals(name) && !"".equals(passwort)) {
                  User user = new User(request.getParameter("email"), request.getParameter("password"));
+                  user.setLoggedIn(true);
                  session.setAttribute("user", user);
+
                   Sortiment sortiment = (Sortiment)session.getAttribute("sortiment");
+
                   if(sortiment == null) {
                       sortiment = new Sortiment();
                       ServiceFactory.getNotifierService().setSortiment(sortiment);
@@ -49,6 +52,13 @@ public class LoginServlet extends HttpServlet{
                 //  request.getServletContext().getRequestDispatcher("/views/overview.jsp").forward(request, response);
                   return;
               }
+        }
+        else if("logout".equals(request.getParameter("login")))
+        {
+
+            ((User)request.getSession().getAttribute("user")).setLoggedIn(false);
+            request.getSession().invalidate();
+            response.sendRedirect("/views/login.jsp");
         }
     }
 }
