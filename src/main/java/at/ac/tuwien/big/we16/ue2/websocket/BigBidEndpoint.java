@@ -36,6 +36,8 @@ public class BigBidEndpoint {
     @OnClose
     public void onClose(Session socketSession) {
         this.notifierService.unregister(socketSession);
+        //muss noch geaendert werden
+      //  notifierService.stop();
     }
 
 

@@ -95,4 +95,23 @@ public class Auction {
     public boolean containsUser(User user) {
         return this.user.contains(user);
     }
+    public List<User> getTeilnehmer() {
+        return this.user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Auction auction = (Auction) o;
+
+        return id != null ? id.equals(auction.id) : auction.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

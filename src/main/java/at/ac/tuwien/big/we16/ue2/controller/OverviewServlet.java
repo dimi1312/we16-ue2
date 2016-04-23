@@ -2,6 +2,7 @@ package at.ac.tuwien.big.we16.ue2.controller;
 
 import at.ac.tuwien.big.we16.ue2.beans.Auction;
 import at.ac.tuwien.big.we16.ue2.beans.Sortiment;
+import at.ac.tuwien.big.we16.ue2.service.ServiceFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,4 +33,5 @@ public class OverviewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);
     }
+
 }

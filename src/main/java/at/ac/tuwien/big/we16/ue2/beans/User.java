@@ -37,6 +37,23 @@ public class User {
         return Math.round(money*100)/100;
     }
 
+    public void changeMoney(double change) {
+        this.money += change;
+    }
+
+    public void addAuction() {
+        this.auctions++;
+    }
+    public void removeAuction() {
+        this.auctions--;
+    }
+
+    public void addWon() {
+        this.won++;
+    }
+    public void addLost() {
+        this.lost++;
+    }
     public void setMoney(double money) {
         this.money = money;
     }

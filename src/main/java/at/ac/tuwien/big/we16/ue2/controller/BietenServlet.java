@@ -34,26 +34,34 @@ public class BietenServlet extends HttpServlet{
             double gebotener_preis = Double.parseDouble(request.getParameter("price"));
             Auction a = (Auction) session.getAttribute("product");
             User u = (User) session.getAttribute("user");
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            String status = "success";
-            if((u.getMoney() - gebotener_preis) < 0 || gebotener_preis < a.getHoechstgebot()) {
-                status = "error";
-            } else {
-                u.setMoney(u.getMoney() - gebotener_preis);
-                if(!a.containsUser(u)) {
-                    u.setAuctions(u.getAuctions() + 1);
-                    a.addUser(u);
+            synchronized(a) {
+                synchronized(u) {
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    String status = "success";
+                    if((u.getMoney() - gebotener_preis) < 0 || gebotener_preis < a.getHoechstgebot()) {
+                        status = "error";
+                    } else {
+                        User loser = a.getHoechstbietender();
+                        synchronized(loser) {
+                            u.changeMoney(gebotener_preis * (-1));
+                            if (!a.containsUser(u)) {
+                                u.addAuction();
+                                a.addUser(u);
+                            }
+                            //   User loser = a.getHoechstbietender();
+
+                            loser.changeMoney(a.getHoechstgebot());
+                            ServiceFactory.getNotifierService().ueberboten(loser, loser.getMoney());
+
+                            a.setHoechstbietender(u);
+                            a.setHoechstgebot(gebotener_preis);
+                            ServiceFactory.getNotifierService().gebotAbgegeben(a, u, gebotener_preis);
+                            response.getWriter().write("{\"price\": \"" + u.getMoney() + "\", \"anzahl\": \"" + u.getAuctions() + "\", \"status\": \"" + status + "\"}");
+
+                        }
+                    }
                 }
-                User loser = a.getHoechstbietender();
-                loser.setMoney(loser.getMoney() + a.getHoechstgebot());
-                ServiceFactory.getNotifierService().ueberboten(loser, loser.getMoney());
-                a.setHoechstbietender(u);
-                a.setHoechstgebot(gebotener_preis);
-                ServiceFactory.getNotifierService().gebotAbgegeben(a, u, gebotener_preis);
             }
-
-        response.getWriter().write("{\"price\": \""+u.getMoney()+"\", \"anzahl\": \""+u.getAuctions()+"\", \"status\": \"" + status +"\"}");
-
     }
 }

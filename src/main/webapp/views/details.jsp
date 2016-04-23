@@ -12,9 +12,9 @@
             socket.onmessage = function(evt) {
                 var parsedData = JSON.parse(evt.data);
                 if(parsedData.typeMsg == "newGebot") {
-                    var auction = document.getElementById("gebot");
+                    var auction = document.getElementById(parsedData.product_id.concat("gebot"));
                     auction.firstChild.nodeValue = parsedData.price;
-                    var bieter = document.getElementById("bieter");
+                    var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
                     bieter.firstChild.nodeValue = parsedData.user;
                 } else if(parsedData.typeMsg == "ueberboten") {
                     var balance = document.getElementById("konto_stand");
@@ -34,7 +34,6 @@
                                        var konto = document.getElementById("konto_stand");
                                        konto.firstChild.nodeValue = val;
                                    } else if(index == "status") {
-                                       alert("status");
                                        var anzeige = document.getElementById("bid-error");
                                        if(val == "error") {
                                        } else {
@@ -104,7 +103,7 @@
         <div class="details-image-container">
             <img class="details-image" src=<%=product.getImg()%> alt="">
         </div>
-        <div data-product-id="ce510a73-408f-489c-87f9-94817d845773" class="details-data">
+        <div data-product-id="<%=product.getId()%>" class="details-data" id="<%=product.getId()%>">
             <h2 class="main-headline" id="productheadline"><%=product.getBezeichnung()%></h2>
 
             <div class="auction-expired-text" style="display:none">
@@ -121,8 +120,8 @@
             <form class="bid-form" method="post" id="ajax_form">
                 <input type="hidden" value="<%=product.getId()%>" id="product_id"/>
                 <label class="bid-form-field" id="highest-price">
-                    <span class="highest-bid" id="gebot"><%=product.getHoechstgebot()%> &euro;</span>
-                    <span class="highest-bidder" id="bieter"><%=product.getHoechstbietender().getUsername()%></span>
+                    <span class="highest-bid" id="<%=product.getId()%>gebot"><%=product.getHoechstgebot()%> &euro;</span>
+                    <span class="highest-bidder" id="<%=product.getId()%>bieter"><%=product.getHoechstbietender().getUsername()%></span>
                 </label>
                 <label class="accessibility" for="price"></label>
                 <input type="number" step="0.01" min="0" id="price" class="bid-form-field form-input"

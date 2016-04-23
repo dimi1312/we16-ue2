@@ -2,10 +2,12 @@ package at.ac.tuwien.big.we16.ue2.controller;
 
 import at.ac.tuwien.big.we16.ue2.beans.Sortiment;
 import at.ac.tuwien.big.we16.ue2.beans.User;
+import at.ac.tuwien.big.we16.ue2.service.ServiceFactory;
 import javafx.scene.control.Alert;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import javax.xml.ws.Service;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -30,7 +32,7 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if("login".equals(request.getParameter("login"))) {
-              HttpSession session = request.getSession(true);
+              HttpSession session = request.getSession();
               String name = request.getParameter("email");
               String passwort =  request.getParameter("password");
               if (!"".equals(name) && !"".equals(passwort)) {
@@ -39,11 +41,10 @@ public class LoginServlet extends HttpServlet{
                   Sortiment sortiment = (Sortiment)session.getAttribute("sortiment");
                   if(sortiment == null) {
                       sortiment = new Sortiment();
-                     // session.setAttribute("sortiment", sortiment);
+                      ServiceFactory.getNotifierService().setSortiment(sortiment);
+                      ServiceFactory.getNotifierService().startComputerUser();
                       this.getServletContext().setAttribute("sortiment", sortiment);
                   }
-                  Cookie cookie = new Cookie("sessionId", session.getId());
-                  response.addCookie(cookie);
                   request.getServletContext().getRequestDispatcher("/views/overview.jsp").forward(request, response);
               }
         }

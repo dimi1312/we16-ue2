@@ -9,6 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
     <script>
+        function readyLoading() {
+            if(document.getElementById("username").firstChild.nodeValue == "vanessa.kos@gmx.at") {
+
+            }
+        }
         var socket = new WebSocket("ws://localhost:8080/socket");
         socket.onmessage = function(evt) {
             var parsedData = JSON.parse(evt.data);
@@ -18,11 +23,23 @@
                 var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
                 bieter.firstChild.nodeValue = parsedData.user;
             } else if(parsedData.typeMsg == "ueberboten") {
-                 var balance = document.getElementById("balance");
+                var balance = document.getElementById("balance");
                 balance.firstChild.nodeValue = parsedData.balance;
+            } else if(parsedData.typeMsg == "endAuction") {
+                var balance = document.getElementById("balance");
+                balance.firstChild.nodeValue = parsedData.balance;
+                var balance = document.getElementById("anzahl");
+                balance.firstChild.nodeValue = parsedData.anzahl;
+                var balance = document.getElementById("won");
+                balance.firstChild.nodeValue = parsedData.won;
+                var balance = document.getElementById("lost");
+                balance.firstChild.nodeValue = parsedData.lost;
             }
         }
 
+        socket.onclose = function(evt) {
+            socket.close();
+        }
         if(localStorage.last1 == null) {
             localStorage.last1 = "";
         }
@@ -67,7 +84,7 @@
         }
     </script>
 </head>
-<body data-decimal-separator="," data-grouping-separator="." onload="print()">
+<body data-decimal-separator="," data-grouping-separator="." onload="readyLoading();">
 
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
@@ -92,24 +109,24 @@
             <h2 class="accessibility" id="userinfoheadline">Benutzerdaten</h2>
             <dl class="user-data properties">
                 <dt class="accessibility">Name:</dt>
-                <dd class="user-name"><%=user.getUsername()%></dd>
+                <dd class="user-name" id="username"><%=user.getUsername()%></dd>
                 <dt>Kontostand:</dt>
                 <dd>
                     <span class="balance" id="balance"><%=user.getMoney()%> &euro;</span>
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
-                    <span class="running-auctions-count"><%=user.getAuctions()%></span>
+                    <span class="running-auctions-count" id="anzahl"><%=user.getAuctions()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Gewonnen:</dt>
                 <dd>
-                    <span class="won-auctions-count"><%=user.getWon()%></span>
+                    <span class="won-auctions-count" id="won"><%=user.getWon()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Verloren:</dt>
                 <dd>
-                    <span class="lost-auctions-count"><%=user.getLost()%></span>
+                    <span class="lost-auctions-count" id="lost"><%=user.getLost()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
             </dl>
