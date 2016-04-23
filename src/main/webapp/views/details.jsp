@@ -48,9 +48,34 @@
                            }
                        });
                    }
+            function bieterForm() {
+                var e = document.getElementById("ende");
+                var jetzt = new Date();
+                var result = e.value.split(",");
+                var ablauf = new Date();
+                ablauf.setFullYear(result[0]);
+                ablauf.setMonth(result[1]-1);
+                ablauf.setDate(result[2]);
+                ablauf.setHours(result[3]);
+                ablauf.setMinutes(result[4]);
+                ablauf.setSeconds(result[5]);
+                ablauf.setMilliseconds(result[6]);
+                var exp = document.getElementById("exp");
+                var rest = document.getElementById("restzeit");
+                var form = document.getElementById("ajax_form");
+                if((ablauf - jetzt) > 0) {
+                    exp.style.display ='none';
+                    rest.style.display = 'block';
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                    exp.style.display = 'block';
+                    rest.style.display = 'none';
+                }
+            }
         </script>
 </head>
-<body data-decimal-separator="," data-grouping-separator=".">
+<body data-decimal-separator="," data-grouping-separator="." onload="bieterForm()">
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
 <header aria-labelledby="bannerheadline">
@@ -116,10 +141,11 @@
                     <span class="highest-bidder"><%=product.getHoechstbietender().getUsername()%></span> verkauft.
                 </p>
             </div>
-            <p class="detail-time">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time="<%=product.getAblaufdatum()%>"
+            <p class="detail-time" id="restzeit">Restzeit: <span  class="detail-rest-time js-time-left" data-end-time="<%=product.getAblaufdatum()%>"
             ></span>
             </p>
             <form class="bid-form" method="post" id="ajax_form">
+                <input type="hidden" id="ende" name="usrname" value="<%=product.getAblaufdatum()%>"/>
                 <input type="hidden" value="<%=product.getId()%>" id="product_id"/>
                 <label class="bid-form-field" id="highest-price">
                     <span class="highest-bid" id="<%=product.getId()%>gebot"><%=product.getHoechstgebot()%> &euro;</span>
