@@ -50,7 +50,7 @@ public class BietenServlet extends HttpServlet{
                                 a.addUser(u);
                             }
                             loser.changeMoney(a.getHoechstgebot());
-                            ServiceFactory.getNotifierService().ueberboten(loser, loser.getMoney());
+                            ServiceFactory.getNotifierService().ueberboten(a,loser, loser.getMoney());
 
                             a.setHoechstbietender(u);
                             a.setHoechstgebot(gebotener_preis);

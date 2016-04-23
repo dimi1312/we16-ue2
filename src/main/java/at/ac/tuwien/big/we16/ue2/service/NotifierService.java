@@ -74,7 +74,7 @@ public class NotifierService {
                             User loser = auction.getHoechstbietender();
                             synchronized (loser) {
                                 loser.changeMoney(auction.getHoechstgebot());
-                                ueberboten(loser, loser.getMoney());
+                                ueberboten(auction, loser, loser.getMoney());
                                 auction.setHoechstbietender(user);
                                 double neu = auction.getHoechstgebot() + 10;
                                 auction.setHoechstgebot(neu);
@@ -117,8 +117,8 @@ public class NotifierService {
 
     }
 
-    public void ueberboten(User user, double gutschrift) {
-        String message = "{\"typeMsg\": \"ueberboten\", \"balance\": \"" + gutschrift + "\"}";
+    public void ueberboten(Auction auction, User user, double gutschrift) {
+        String message = "{\"typeMsg\": \"ueberboten\", \"balance\": \"" + gutschrift + "\", \"hlink\": \"link"+auction.getId()+"\"}";
         for(Session session : clients.keySet()) {
            if(user.equals(userList.get(clients.get(session)))) {
                 session.getAsyncRemote().sendText(message);
@@ -126,7 +126,7 @@ public class NotifierService {
         }
     }
     public void gebotAbgegeben(Auction auction, User highestBidder, double price) {
-        String message = "{\"typeMsg\": \"newGebot\", \"product_id\": \"" + auction.getId() +"\",\"user\": \"" + highestBidder.getUsername() +"\",\"price\": \""+price+"\"}";
+        String message = "{\"typeMsg\": \"newGebot\", \"product_id\": \"" + auction.getId() +"\",\"user\": \"" + highestBidder.getUsername() +"\",\"price\": \""+price+ "\", \"hlink\": \"link"+auction.getId()+"\"}";
         this.sendMessageToAllUsers(message);
     }
 

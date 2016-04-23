@@ -22,9 +22,14 @@
                 auction.firstChild.nodeValue = parsedData.price;
                 var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
                 bieter.firstChild.nodeValue = parsedData.user;
+
             } else if(parsedData.typeMsg == "ueberboten") {
                 var balance = document.getElementById("balance");
                 balance.firstChild.nodeValue = parsedData.balance;
+                if (document.getElementById(parsedData.hlink).classList.contains('highlight'))
+                    document.getElementById(parsedData.hlink).classList.remove('highlight');
+
+
             } else if(parsedData.typeMsg == "endAuction") {
                 var balance = document.getElementById("balance");
                 balance.firstChild.nodeValue = parsedData.balance;
@@ -145,8 +150,8 @@
         <div class="products">
             <% for (Auction p : sortiment.getAuction()) { %>
                 <div class="product-outer" data-product-id="<%=p.getId()%>">
-                    <a name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getBezeichnung()%>" onclick="clickCounter(this);"
-                       class="product <%=user.getUsername().equals(p.getHoechstbietender().getUsername())?" highlight":""%>" title="Mehr Informationen">
+                    <a id="link<%=p.getId()%>" name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getBezeichnung()%>" onclick="clickCounter(this);"
+                       class="product <%=user.equals(p.getHoechstbietender())?" highlight":""%>" title="Mehr Informationen">
                         <img class="product-image" src="<%=p.getImg()%>" alt="">
                         <dl class="product-properties properties">
                             <dt>Bezeichnung</dt>
