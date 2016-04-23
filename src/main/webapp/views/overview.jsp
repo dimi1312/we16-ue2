@@ -146,7 +146,7 @@
             <% for (Auction p : sortiment.getAuction()) { %>
                 <div class="product-outer" data-product-id="<%=p.getId()%>">
                     <a name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getBezeichnung()%>" onclick="clickCounter(this);"
-                       class="product highlight" title="Mehr Informationen">
+                       class="product <%=user.getUsername().equals(p.getHoechstbietender().getUsername())?" highlight":""%>" title="Mehr Informationen">
                         <img class="product-image" src="<%=p.getImg()%>" alt="">
                         <dl class="product-properties properties">
                             <dt>Bezeichnung</dt>
