@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="../styles/style.css">
     <script>
         function readyLoading() {
-            if(document.getElementById("username").firstChild.nodeValue == "vanessa.kos@gmx.at") {
+            var input = document.getElementById("refresh");
 
-            }
+            input.value == 'yes' ? location.reload(true) : input.value = 'yes';
         }
         var socket = new WebSocket("ws://localhost:8080/socket");
         socket.onmessage = function(evt) {
@@ -90,7 +90,7 @@
     </script>
 </head>
 <body data-decimal-separator="," data-grouping-separator="." onload="readyLoading();">
-
+<input type="hidden" id="refresh" value="no" />
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
 <header aria-labelledby="bannerheadline">
