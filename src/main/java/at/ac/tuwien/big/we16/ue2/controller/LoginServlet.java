@@ -45,7 +45,9 @@ public class LoginServlet extends HttpServlet{
                       ServiceFactory.getNotifierService().startComputerUser();
                       this.getServletContext().setAttribute("sortiment", sortiment);
                   }
-                  request.getServletContext().getRequestDispatcher("/views/overview.jsp").forward(request, response);
+                  response.sendRedirect("/views/overview.jsp");
+                //  request.getServletContext().getRequestDispatcher("/views/overview.jsp").forward(request, response);
+                  return;
               }
         }
     }

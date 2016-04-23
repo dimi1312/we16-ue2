@@ -39,7 +39,9 @@ public class NotifierService {
         this.sortiment = sortiment;
         this.user = new User();
         this.user.setUsername("Computer");
-       /* final Runnable checkAuctions = new Runnable() {
+    }
+    public void startAuctionEndWatcher() {
+      /*  final Runnable checkAuctions = new Runnable() {
             public void run() {
                 for(Auction a : sortiment.getAuction()) {
                     if(a.getBezeichnung().equals("Reload")) {
@@ -60,7 +62,7 @@ public class NotifierService {
                 }
             }
         };
-        final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 10,10, TimeUnit.SECONDS);*/
+        final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 1,1, TimeUnit.SECONDS);*/
     }
     public void startComputerUser() {
         final Runnable computer = new Runnable() {

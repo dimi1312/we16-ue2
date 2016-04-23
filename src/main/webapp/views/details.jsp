@@ -34,9 +34,11 @@
                                        var konto = document.getElementById("konto_stand");
                                        konto.firstChild.nodeValue = val;
                                    } else if(index == "status") {
-                                       var anzeige = document.getElementById("bid-error");
+                                       var error = document.getElementById("bid-error");
                                        if(val == "error") {
+                                           error.style.display = 'block';
                                        } else {
+                                           error.style.display = 'none';
                                        }
                                    } else {
                                        var auktionen = document.getElementById("laufende_Auktionen");
@@ -106,7 +108,7 @@
         <div data-product-id="<%=product.getId()%>" class="details-data" id="<%=product.getId()%>">
             <h2 class="main-headline" id="productheadline"><%=product.getBezeichnung()%></h2>
 
-            <div class="auction-expired-text" style="display:none">
+            <div class="auction-expired-text" style="display:none" id="exp">
                 <p>
                     Diese Auktion ist bereits abgelaufen.
                     Das Produkt wurde um
@@ -126,7 +128,7 @@
                 <label class="accessibility" for="price"></label>
                 <input type="number" step="0.01" min="0" id="price" class="bid-form-field form-input"
                        name="price" required>
-                <p id="bid-error" class="bid-error">Es gibt bereits ein höheres Gebot oder der Kontostand ist zu
+                <p id="bid-error" class="bid-error" style="display: none">Es gibt bereits ein h&ouml;heres Gebot oder der Kontostand ist zu
                     niedrig.</p>
                 <input id="submit-price" type="button" class="bid-form-field button" name="submit-price" value="Bieten" onclick="getAnswer();">
             </form>

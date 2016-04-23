@@ -25,8 +25,9 @@ public class OverviewServlet extends HttpServlet {
         HttpSession session = null;
         session = req.getSession();
         session.setAttribute("product",p);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
-        dispatcher.forward(req,resp);
+      //  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
+      //  dispatcher.forward(req,resp);
+        resp.sendRedirect("/views/details.jsp");
     }
 
     @Override

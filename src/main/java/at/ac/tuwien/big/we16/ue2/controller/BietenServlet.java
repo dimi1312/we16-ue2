@@ -49,18 +49,15 @@ public class BietenServlet extends HttpServlet{
                                 u.addAuction();
                                 a.addUser(u);
                             }
-                            //   User loser = a.getHoechstbietender();
-
                             loser.changeMoney(a.getHoechstgebot());
                             ServiceFactory.getNotifierService().ueberboten(loser, loser.getMoney());
 
                             a.setHoechstbietender(u);
                             a.setHoechstgebot(gebotener_preis);
                             ServiceFactory.getNotifierService().gebotAbgegeben(a, u, gebotener_preis);
-                            response.getWriter().write("{\"price\": \"" + u.getMoney() + "\", \"anzahl\": \"" + u.getAuctions() + "\", \"status\": \"" + status + "\"}");
-
                         }
                     }
+                    response.getWriter().write("{\"price\": \"" + u.getMoney() + "\", \"anzahl\": \"" + u.getAuctions() + "\", \"status\": \"" + status + "\"}");
                 }
             }
     }
