@@ -57,7 +57,7 @@
                     localStorage.last2 = localStorage.last1;
                     localStorage.href2 = localStorage.href1;
                     localStorage.last1 = node.name;
-                    localStorage.href1 = "/../../controller/OverviewServlet?param=".concat(node.name);
+                    localStorage.href1 = node.href;
                 }
             }
         }
@@ -124,7 +124,7 @@
         <div class="products">
             <% for (Auction p : sortiment.getAuction()) { %>
                 <div class="product-outer" data-product-id="<%=p.getId()%>">
-                    <a id="link<%=p.getId()%>" name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getBezeichnung()%>" onclick="clickCounter(this);"
+                    <a id="link<%=p.getId()%>" name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getId()%>" onclick="clickCounter(this);"
                        class="product <%=user.equals(p.getHoechstbietender())?" highlight":""%>" title="Mehr Informationen">
                         <img class="product-image" src="<%=p.getImg()%>" alt="">
                         <dl class="product-properties properties">

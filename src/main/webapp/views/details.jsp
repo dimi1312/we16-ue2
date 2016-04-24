@@ -106,7 +106,7 @@
                         localStorage.last2 = localStorage.last1;
                         localStorage.href2 = localStorage.href1;
                         localStorage.last1 = node.name;
-                        localStorage.href1 = "/../../controller/OverviewServlet?param=".concat(node.name);
+                        localStorage.href1 = node.href;
                     }
                 }
             }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
+ * The class is called from overview.jsp and forwards to the selected product
  * Created by vanessa on 15.04.16.
  */
 public class OverviewServlet extends HttpServlet {
@@ -21,15 +22,20 @@ public class OverviewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("param");
         Sortiment sortiment = (Sortiment)this.getServletContext().getAttribute("sortiment");
-        Auction p = sortiment.getProductByName(name);
+        Auction p = sortiment.getProductById(name);
         HttpSession session = null;
         session = req.getSession();
         session.setAttribute("product",p);
-      //  RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
-      //  dispatcher.forward(req,resp);
         resp.sendRedirect("/views/details.jsp");
     }
 
+    /**
+     * Postcondition:
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req,resp);

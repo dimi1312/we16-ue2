@@ -12,18 +12,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * The class is called from login.jsp and handels the login of a user.
  * Created by Dimi on 12.04.2016.
  */
 public class LoginServlet extends HttpServlet{
-    //public static Sortiment sortiment = new Sortiment();
-
+    /**
+     * The methode handels a Get call on login.jsp by using the post methode.
+     * @param req HttpRequest
+     * @param resp HttpResponse
+     * @throws ServletException if an error occurs
+     * @throws IOException if an io error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method. If the user attemps to log in a new Session is created. From
+     * the given parameters (email, password) a new User is going to be created an stored in the session. The user
+     * is then redirected to the overview page.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -32,31 +40,17 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if("login".equals(request.getParameter("login"))) {
+            //creates new session and stores new user in it
               HttpSession session = request.getSession();
               String name = request.getParameter("email");
               String passwort =  request.getParameter("password");
               if (!"".equals(name) && !"".equals(passwort)) {
                  User user = new User(request.getParameter("email"), request.getParameter("password"));
-                  user.setLoggedIn(true);
+                 user.setLoggedIn(true);
                  session.setAttribute("user", user);
-
-                  Sortiment sortiment = (Sortiment)session.getAttribute("sortiment");
-
-                  if(sortiment == null) {
-                      sortiment = new Sortiment();
-                      ServiceFactory.getNotifierService().setSortiment(sortiment);
-                      ServiceFactory.getNotifierService().startComputerUser();
-                      ServiceFactory.getNotifierService().startAuctionEndWatcher();
-                      this.getServletContext().setAttribute("sortiment", sortiment);
-                  }
-                  response.sendRedirect("/views/overview.jsp");
-                //  request.getServletContext().getRequestDispatcher("/views/overview.jsp").forward(request, response);
-                  return;
+                 response.sendRedirect("/views/overview.jsp");
               }
-        }
-        else if("logout".equals(request.getParameter("login")))
-        {
-
+        } else if("logout".equals(request.getParameter("login"))) {
             ((User)request.getSession().getAttribute("user")).setLoggedIn(false);
             request.getSession().invalidate();
             response.sendRedirect("/views/login.jsp");

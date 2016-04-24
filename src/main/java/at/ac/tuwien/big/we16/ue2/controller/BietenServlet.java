@@ -32,6 +32,7 @@ public class BietenServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             HttpSession session = request.getSession();
             double gebotener_preis = Double.parseDouble(request.getParameter("price"));
+            gebotener_preis = Math.round(gebotener_preis * 100)/100.0;
             Auction a = (Auction) session.getAttribute("product");
             User u = (User) session.getAttribute("user");
             synchronized(a) {
@@ -39,7 +40,7 @@ public class BietenServlet extends HttpServlet{
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     String status = "success";
-                    if((u.getMoney() - gebotener_preis) < 0 || gebotener_preis < a.getHoechstgebot()) {
+                    if((u.getMoney() - gebotener_preis) < 0 || gebotener_preis <= a.getHoechstgebot()) {
                         status = "error";
                     } else {
                         User loser = a.getHoechstbietender();
