@@ -73,7 +73,7 @@
             "img" : "the_godfather.png",
             "dbpedia": "http://dbpedia.org/page/The_Godfather",
             "preis": 118.93,
-            "auction_end": "2016,04,24,02,27,23,291"
+            "auction_end": "2016,04,24,14,32,23,291"
         },
         {
             "product_id": "fdf093a5-6ee2-48a0-b10f-21ec2735abe0",
@@ -83,7 +83,7 @@
             "img" : "the_martian.png",
             "dbpedia": "http://dbpedia.org/page/The_Martian_(film)",
             "preis": 340.72,
-            "auction_end": "2016,03,14,14,30,56,292"
+            "auction_end": "2016,04,24,14,34,56,292"
         },
         {
             "product_id": "a5d68110-562b-437f-992a-8b6735f9d251",

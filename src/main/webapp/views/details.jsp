@@ -13,36 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
         <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:8080/socket");
-            socket.onmessage = function(evt) {
-                var parsedData = JSON.parse(evt.data);
-                if(parsedData.typeMsg == "newGebot") {
-                    var auction = document.getElementById(parsedData.product_id.concat("gebot"));
-                    document.getElementById(parsedData.product_id.concat("gebot2")).firstChild.nodeValue = parsedData.price;
-                    auction.firstChild.nodeValue = parsedData.price;
-                    var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
-                    document.getElementById(parsedData.product_id.concat("bieter2")).firstChild.nodeValue = parsedData.user;
-                    bieter.firstChild.nodeValue = parsedData.user;
-                } else if(parsedData.typeMsg == "ueberboten") {
-                    var balance = document.getElementById("konto_stand");
-                    balance.firstChild.nodeValue = parsedData.balance;
-                } else if(parsedData.typeMsg == "endAuction") {
-                    var konto = document.getElementById("konto_stand");
-                    konto.firstChild.nodeValue = parsedData.balance;
-                    var auktionen = document.getElementById("laufende_Auktionen");
-                    auktionen.firstChild.nodeValue = parsedData.anzahl;
-                    document.getElementById("won").firstChild.nodeValue = parsedData.won;
-                    document.getElementById("lost").firstChild.nodeValue= parsedData.lost;
-                    if(document.getElementById("product_id").value == parsedData.product_id) {
-                    var exp = document.getElementById("exp");
-                    var rest = document.getElementById("restzeit");
-                    var form = document.getElementById("ajax_form");
-                        form.style.display = 'none';
-                        exp.style.display = 'block';
-                        rest.style.display = 'none';
-                    }
-                }
-            }
                    function getAnswer() {
                        dataString = $('#ajax_form').serialize();
                        $.ajax({
@@ -57,13 +27,16 @@
                                        konto.firstChild.nodeValue = val;
                                    } else if(index == "status") {
                                        var error = document.getElementById("bid-error");
+                                       alert("if");
                                        if(val == "error") {
+                                           alert("error");
                                            error.style.display = 'block';
                                        } else {
+                                           alert("kein error");
                                            error.style.display = 'none';
                                        }
                                    } else {
-                                       var auktionen = document.getElementById("laufende_Auktionen");
+                                       var auktionen = document.getElementById("anzahl");
                                        auktionen.firstChild.nodeValue = val;
                                    }
                                });
@@ -170,7 +143,7 @@
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
-                    <span id="laufende_Auktionen" class="running-auctions-count"><%=user.getAuctions()%></span>
+                    <span id="anzahl" class="running-auctions-count"><%=user.getAuctions()%></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Gewonnen:</dt>

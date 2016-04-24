@@ -19,34 +19,6 @@
             var input = document.getElementById("refresh");
             input.value == 'yes' ? location.reload(true) : input.value = 'yes';
         }
-        var socket = new WebSocket("ws://localhost:8080/socket");
-        socket.onmessage = function(evt) {
-            var parsedData = JSON.parse(evt.data);
-            if(parsedData.typeMsg == "newGebot") {
-                var auction = document.getElementById(parsedData.product_id.concat("gebot"));
-                auction.firstChild.nodeValue = parsedData.price;
-                var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
-                bieter.firstChild.nodeValue = parsedData.user;
-            } else if(parsedData.typeMsg == "ueberboten") {
-                var balance = document.getElementById("balance");
-                balance.firstChild.nodeValue = parsedData.balance;
-                if (document.getElementById(parsedData.hlink).classList.contains('highlight'))
-                    document.getElementById(parsedData.hlink).classList.remove('highlight');
-            } else if(parsedData.typeMsg == "endAuction") {
-                var balance = document.getElementById("balance");
-                balance.firstChild.nodeValue = parsedData.balance;
-                var balance = document.getElementById("anzahl");
-                balance.firstChild.nodeValue = parsedData.anzahl;
-                var balance = document.getElementById("won");
-                balance.firstChild.nodeValue = parsedData.won;
-                var balance = document.getElementById("lost");
-                balance.firstChild.nodeValue = parsedData.lost;
-            }
-        }
-
-        socket.onclose = function(evt) {
-            socket.close();
-        }
         if(localStorage.last1 == null) {
             localStorage.last1 = "";
         }
@@ -119,7 +91,7 @@
                 <dd class="user-name" id="username"><%=user.getUsername()%></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance" id="balance"><%=user.getMoney()%> &euro;</span>
+                    <span class="balance" id="konto_stand"><%=user.getMoney()%> &euro;</span>
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>

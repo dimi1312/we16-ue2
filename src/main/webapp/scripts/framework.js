@@ -107,7 +107,30 @@ function formatCurrency(x) {
 // change the URL.
 var socket = new WebSocket("ws://localhost:8080/socket");
 socket.onmessage = function (event) {
-
     /***  write your code here ***/
+    var parsedData = JSON.parse(event.data);
+    if(parsedData.typeMsg == "newGebot") {
+        document.getElementById(parsedData.product_id.concat("gebot")).firstChild.nodeValue = parsedData.price;
+        document.getElementById(parsedData.product_id.concat("bieter")).firstChild.nodeValue = parsedData.user;
+        document.getElementById(parsedData.product_id.concat("gebot2")).firstChild.nodeValue = parsedData.price;
+        document.getElementById(parsedData.product_id.concat("bieter2")).firstChild.nodeValue = parsedData.user;
+    } else if(parsedData.typeMsg == "ueberboten") {
+        document.getElementById("konto_stand").firstChild.nodeValue = parsedData.balance;
+        if (document.getElementById(parsedData.hlink).classList.contains('highlight'))
+            document.getElementById(parsedData.hlink).classList.remove('highlight');
+    } else if(parsedData.typeMsg == "endAuction") {
+        document.getElementById("konto_stand").firstChild.nodeValue = parsedData.balance;
+        document.getElementById("anzahl").firstChild.nodeValue = parsedData.anzahl;
+        document.getElementById("won").firstChild.nodeValue = parsedData.won;
+        document.getElementById("lost").firstChild.nodeValue = parsedData.lost;
+        if (document.getElementById("product_id").value == parsedData.product_id) {
+            var exp = document.getElementById("exp");
+            var rest = document.getElementById("restzeit");
+            var form = document.getElementById("ajax_form");
+            form.style.display = 'none';
+            exp.style.display = 'block';
+            rest.style.display = 'none';
+        }
 
-};
+    }
+}
