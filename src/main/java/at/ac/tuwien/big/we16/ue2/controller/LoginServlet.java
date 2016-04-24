@@ -45,8 +45,7 @@ public class LoginServlet extends HttpServlet{
                   if(sortiment == null) {
                       sortiment = new Sortiment();
                       ServiceFactory.getNotifierService().setSortiment(sortiment);
-                   //   ServiceFactory.getNotifierService().startComputerUser();
-                      ServiceFactory.getNotifierService().formatAblaufCheck();
+                      ServiceFactory.getNotifierService().startComputerUser();
                       ServiceFactory.getNotifierService().startAuctionEndWatcher();
                       this.getServletContext().setAttribute("sortiment", sortiment);
                   }

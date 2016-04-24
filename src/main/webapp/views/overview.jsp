@@ -27,14 +27,11 @@
                 auction.firstChild.nodeValue = parsedData.price;
                 var bieter = document.getElementById(parsedData.product_id.concat("bieter"));
                 bieter.firstChild.nodeValue = parsedData.user;
-
             } else if(parsedData.typeMsg == "ueberboten") {
                 var balance = document.getElementById("balance");
                 balance.firstChild.nodeValue = parsedData.balance;
                 if (document.getElementById(parsedData.hlink).classList.contains('highlight'))
                     document.getElementById(parsedData.hlink).classList.remove('highlight');
-
-
             } else if(parsedData.typeMsg == "endAuction") {
                 var balance = document.getElementById("balance");
                 balance.firstChild.nodeValue = parsedData.balance;

@@ -28,7 +28,6 @@ public class NotifierService {
     private Sortiment sortiment;
     private Random random = new Random();
     private User user;
-    private Map<LocalDateTime, List<Auction>> checkAblauf = new ConcurrentHashMap<>();
 
     public NotifierService() {
         // Use the scheduled executor to regularly check for recently expired auctions
@@ -44,74 +43,29 @@ public class NotifierService {
         this.user.setUsername("Computer");
     }
 
-    public void formatAblaufCheck() {
-        for(Auction a : sortiment.getAuction()) {
-            LocalDateTime time = LocalDateTime.parse(a.getAblaufdatum(), format);
-            List<Auction> auctions = null;
-            if(!checkAblauf.containsKey(time)) {
-                auctions = new ArrayList<>();
-                auctions.add(a);
-                checkAblauf.put(time, auctions);
-            } else {
-                checkAblauf.get(time).add(a);
-            }
-        }
-    }
-    /*
     public void startAuctionEndWatcher() {
         final Runnable checkAuctions = new Runnable() {
-            public void run() {
-                for(LocalDateTime time : checkAblauf.keySet()) {
-                        if (LocalDateTime.now().isAfter(time)) {
-                            for(Auction a : checkAblauf.get(time)) {
-                                if(!a.isExpired()) {
-                                    synchronized (a) {
-                                        User winner = a.getHoechstbietender();
-                                        synchronized (winner) {
-                                            a.removeUser(winner);
-                                            winner.removeAuction();
-                                            winner.addWon();
-                                        }
-                                        for (User loser : a.getTeilnehmer()) {
-                                            synchronized (loser) {
-                                                loser.removeAuction();
-                                                loser.addLost();
-                                            }
-                                        }
-                                        a.setExpired();
-                                    }
-                                    auctionEnd();
-                                }
-                            }
-                        }
-                    }
-                }
-        };
-        final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 1,1, TimeUnit.SECONDS);
-    }*/
-
-    public void startAuctionEndWatcher() {
-        final Runnable checkAuctions = new Runnable() {
+            int i = 0;
             public void run() {
                 for(Auction a : sortiment.getAuction()) {
-                        if (LocalDateTime.now().isAfter(LocalDateTime.parse(a.getAblaufdatum(), format)) && !a.isExpired()) {
-                            synchronized (a) {
-                                User winner = a.getHoechstbietender();
-                                synchronized (winner) {
-                                    a.removeUser(winner);
-                                    winner.removeAuction();
-                                    winner.addWon();
-                                }
-                                for (User loser : a.getTeilnehmer()) {
-                                    synchronized (loser) {
-                                        loser.removeAuction();
-                                        loser.addLost();
-                                    }
-                                }
-                                a.setExpired();
+                    if (LocalDateTime.now().isAfter(LocalDateTime.parse(a.getAblaufdatum(), format)) && !a.isExpired()) {
+                        synchronized (a) {
+                            User winner = a.getHoechstbietender();
+                            synchronized (winner) {
+                                a.removeUser(winner);
+                                winner.removeAuction();
+                                winner.addWon();
                             }
-                            auctionEnd(a);
+                            for (User loser : a.getTeilnehmer()) {
+                                synchronized (loser) {
+                                    loser.removeAuction();
+                                    loser.addLost();
+                                }
+                            }
+                            a.setExpired();
                         }
+                        auctionEnd(a);
+                    }
                 }
             }
         };
@@ -164,10 +118,16 @@ public class NotifierService {
             User user = userList.get(clients.get(session));
             if(user != null) {
                 String message;
-                synchronized(user) {
-                    message = "{\"typeMsg\": \"endAuction\", \"product_id\": \"" + a.getId() +"\",\"balance\": \"" + user.getMoney() + "\", \"anzahl\": \"" + user.getAuctions() + "\", \"won\": \"" + user.getWon() + "\", \"lost\": \"" + user.getLost() + "\"}";
+                synchronized (a) {
+                    synchronized (user) {
+                        message = "{\"typeMsg\": \"endAuction\", \"product_id\": \"" + a.getId() + "\",\"balance\": \"" + user.getMoney() + "\", \"anzahl\": \"" + user.getAuctions() + "\", \"won\": \"" + user.getWon() + "\", \"lost\": \"" + user.getLost() + "\"}";
+                    }
                 }
-                session.getAsyncRemote().sendText(message);
+                try {
+                    session.getBasicRemote().sendText(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -177,8 +137,12 @@ public class NotifierService {
         String message = "{\"typeMsg\": \"ueberboten\", \"balance\": \"" + gutschrift + "\", \"hlink\": \"link"+auction.getId()+"\"}";
         for(Session session : clients.keySet()) {
            if(user.equals(userList.get(clients.get(session)))) {
-                session.getAsyncRemote().sendText(message);
-            }
+               try {
+                   session.getBasicRemote().sendText(message);
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           }
         }
     }
     public void gebotAbgegeben(Auction auction, User highestBidder, double price) {
