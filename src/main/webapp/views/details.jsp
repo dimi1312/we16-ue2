@@ -95,9 +95,51 @@
                     rest.style.display = 'none';
                 }
             }
+            if(localStorage.last1 == null) {
+                localStorage.last1 = "";
+            }
+            if(localStorage.last2 == null) {
+                localStorage.last2 = "";
+            }
+            if(localStorage.last3 == null) {
+                localStorage.last3 = "";
+            }
+            if(localStorage.href1 == null) {
+                localStorage.href1 = "";
+            }
+            if(localStorage.href2 == null) {
+                localStorage.href2 = "";
+            }
+            if(localStorage.href3 == null) {
+                localStorage.href3 = "";
+            }
+            function print() {
+                if(supportsLocalStorage()) {
+                    document.getElementById("rH").style.display = "block";
+                    document.getElementById("rU").style.display = "block";
+                    document.getElementById("first").innerHTML = localStorage.last1;
+                    document.getElementById("first").href = localStorage.href1;
+                    document.getElementById("second").innerHTML = localStorage.last2;
+                    document.getElementById("second").href = localStorage.href2;
+                    document.getElementById("third").innerHTML = localStorage.last3;
+                    document.getElementById("third").href = localStorage.href3;
+                }
+            }
+            function clickCounter(node) {
+                if(supportsLocalStorage()) {
+                    if(localStorage.last1 !== node.name) {
+                        localStorage.last3 = localStorage.last2;
+                        localStorage.href3 = localStorage.href2;
+                        localStorage.last2 = localStorage.last1;
+                        localStorage.href2 = localStorage.href1;
+                        localStorage.last1 = node.name;
+                        localStorage.href1 = "/../../controller/OverviewServlet?param=".concat(node.name);
+                    }
+                }
+            }
         </script>
 </head>
-<body data-decimal-separator="," data-grouping-separator="." onload="bieterForm()">
+<body data-decimal-separator="," data-grouping-separator="." onload="bieterForm(); print();">
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
 <header aria-labelledby="bannerheadline">
@@ -144,8 +186,12 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3 class="recently-viewed-headline">Zuletzt angesehen</h3>
-            <ul class="recently-viewed-list"></ul>
+            <h3 class="recently-viewed-headline" style="display: none;" id="rH">Zuletzt angesehen</h3>
+            <ul class="recently-viewed-list" style="display: none;" id="rU">
+                <li class="recently-viewed-link"><a id="first" href=""></a></li>
+                <li class="recently-viewed-link"><a id="second" href=""></a></li>
+                <li class="recently-viewed-link"><a id="third" href=""></a></li>
+            </ul>
         </div>
     </aside>
     <main aria-labelledby="productheadline" class="details-container">

@@ -66,9 +66,9 @@
             localStorage.href3 = "";
         }
         function print() {
-            if(typeof(Storage) !== "undefined") {
-               /* document.getElementById("reViewHeadline").style.display = "initial";
-                document.getElementById("reViewList").style.display = "initial";*/
+            if(supportsLocalStorage()) {
+                document.getElementById("rH").style.display = "block";
+                document.getElementById("rU").style.display = "block";
                 document.getElementById("first").innerHTML = localStorage.last1;
                 document.getElementById("first").href = localStorage.href1;
                 document.getElementById("second").innerHTML = localStorage.last2;
@@ -78,7 +78,7 @@
             }
         }
         function clickCounter(node) {
-            if(typeof(Storage) !== "undefined") {
+            if(supportsLocalStorage()) {
                 if(localStorage.last1 !== node.name) {
                     localStorage.last3 = localStorage.last2;
                     localStorage.href3 = localStorage.href2;
@@ -91,7 +91,7 @@
         }
     </script>
 </head>
-<body data-decimal-separator="," data-grouping-separator="." onload="readyLoading();">
+<body data-decimal-separator="," data-grouping-separator="." onload="readyLoading(); print();">
 <input type="hidden" id="refresh" value="no" />
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
@@ -139,8 +139,8 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3 class="reViewHeadline">Zuletzt angesehen</h3>
-            <ul class="reViewList">
+            <h3 class="recently-viewed-headline" style="display: none;" id="rH">Zuletzt angesehen</h3>
+            <ul class="recently-viewed-list" style="display: none;" id="rU">
                 <li class="recently-viewed-link"><a id="first" href=""></a></li>
                 <li class="recently-viewed-link"><a id="second" href=""></a></li>
                 <li class="recently-viewed-link"><a id="third" href=""></a></li>

@@ -326,17 +326,10 @@ footer {
     border-top: 1px solid #ccc;
     margin-top: 12px;
 }
-.reViewList,
-.reViewHeadline {
-    color: red;
-    margin: 12px 0;
-    display: none;
-}
 
 .recently-viewed-list,
 .recently-viewed-headline {
     margin: 12px 0;
-    display: none;
 }
 
 .recently-viewed-link {
