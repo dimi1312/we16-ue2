@@ -1,5 +1,7 @@
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.beans.User" scope="session" />
 <jsp:useBean id="sortiment" class="at.ac.tuwien.big.we16.ue2.beans.Sortiment" scope="session" />
+<!doctype html>
+<html lang="de">
 <%
     if(user==null||!user.isLoggedIn())
         response.sendRedirect("/views/login.jsp");
@@ -7,8 +9,6 @@
     {
 %>
 <%@ page import="at.ac.tuwien.big.we16.ue2.beans.Auction" %>
-<!doctype html>
-<html lang="de">
 <head>
     <meta charset="utf-8">
     <title>BIG Bid - Produkte</title>
@@ -113,9 +113,9 @@
         <div class="recently-viewed-container">
             <h3 class="recently-viewed-headline" style="display: none;" id="rH">Zuletzt angesehen</h3>
             <ul class="recently-viewed-list" style="display: none;" id="rU">
-                <li class="recently-viewed-link"><a id="first" href=""></a></li>
-                <li class="recently-viewed-link"><a id="second" href=""></a></li>
-                <li class="recently-viewed-link"><a id="third" href=""></a></li>
+                <li class="recently-viewed-link"><a id="first" href="" title="Link to recently visited auction"></a></li>
+                <li class="recently-viewed-link"><a id="second" href="" title="Link to recently visited auction"></a></li>
+                <li class="recently-viewed-link"><a id="third" href="" title="Link to recently visited auction"></a></li>
             </ul>
         </div>
     </aside>
@@ -126,7 +126,7 @@
                 <div class="product-outer" data-product-id="<%=p.getId()%>">
                     <a id="link<%=p.getId()%>" name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getId()%>" onclick="clickCounter(this);"
                        class="product <%=user.equals(p.getHoechstbietender())?" highlight":""%>" title="Mehr Informationen">
-                        <img class="product-image" src="<%=p.getImg()%>" alt="">
+                        <img class="product-image" src="<%=p.getImg()%>" alt="<%=p.getBezeichnung()%>">
                         <dl class="product-properties properties">
                             <dt>Bezeichnung</dt>
                             <dd class="product-name"><%=p.getBezeichnung()%></dd>

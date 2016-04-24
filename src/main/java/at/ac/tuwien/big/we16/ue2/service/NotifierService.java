@@ -33,14 +33,19 @@ public class NotifierService {
         // Use the scheduled executor to regularly check for recently expired auctions
         // and send a notification to all relevant users.
         this.executor = Executors.newSingleThreadScheduledExecutor();
-        //Computerbenutzer der auf alle Auktionen im Abstand von 10 Sekunden das Hoechstgebot mit einer Wahrscheinlichkeit von 30% ueberbietet
+        //computeruser which bids all 10 seconds with an probability of 30% higher than the current bid on each auction
         this.computerUser = Executors.newSingleThreadScheduledExecutor();
-    }
-
-    public void setSortiment(Sortiment sortiment) {
-        this.sortiment = sortiment;
         this.user = new User();
         this.user.setUsername("Computer");
+    }
+
+    /**
+     * Precondition: sortiment != null
+     * Postcondition: The methode sets the sortiment to the given parameter
+     * @param sortiment Sortiment to be processed
+     */
+    public void setSortiment(Sortiment sortiment) {
+        this.sortiment = sortiment;
     }
 
     public void startAuctionEndWatcher() {

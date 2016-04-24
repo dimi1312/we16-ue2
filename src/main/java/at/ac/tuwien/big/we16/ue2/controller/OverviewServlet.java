@@ -17,7 +17,14 @@ import java.io.IOException;
  * Created by vanessa on 15.04.16.
  */
 public class OverviewServlet extends HttpServlet {
-
+    /**
+     * Postcondition: The methode searches for the selected product and stores it in the session. Then
+     * there is a redirect to the details site to view the selected product.
+     * @param req HttpRequest
+     * @param resp HttpResponse
+     * @throws ServletException if an error occurs
+     * @throws IOException if an io error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("param");
@@ -30,11 +37,11 @@ public class OverviewServlet extends HttpServlet {
     }
 
     /**
-     * Postcondition:
-     * @param req
-     * @param resp
-     * @throws ServletException
-     * @throws IOException
+     * Postcondition: The methode calls the doGet methode.
+     * @param req HttpRequest
+     * @param resp HttpResponse
+     * @throws ServletException if an error occurs
+     * @throws IOException if an io error occurs
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -161,15 +161,15 @@
         <div class="recently-viewed-container">
             <h3 class="recently-viewed-headline" style="display: none;" id="rH">Zuletzt angesehen</h3>
             <ul class="recently-viewed-list" style="display: none;" id="rU">
-                <li class="recently-viewed-link"><a id="first" href=""></a></li>
-                <li class="recently-viewed-link"><a id="second" href=""></a></li>
-                <li class="recently-viewed-link"><a id="third" href=""></a></li>
+                <li class="recently-viewed-link"><a id="first" href="" title="Link to recently visited auction"></a></li>
+                <li class="recently-viewed-link"><a id="second" href="" title="Link to recently visited auction"></a></li>
+                <li class="recently-viewed-link"><a id="third" href="" title="Link to recently visited auction"></a></li>
             </ul>
         </div>
     </aside>
     <main aria-labelledby="productheadline" class="details-container">
         <div class="details-image-container">
-            <img class="details-image" src=<%=product.getImg()%> alt="">
+            <img class="details-image" alt="<%=product.getBezeichnung()%>" src=<%=product.getImg()%>>
         </div>
         <div data-product-id="<%=product.getId()%>" class="details-data" id="<%=product.getId()%>">
             <h2 class="main-headline" id="productheadline"><%=product.getBezeichnung()%></h2>
@@ -192,7 +192,7 @@
                     <span class="highest-bid" id="<%=product.getId()%>gebot"><%=product.getHoechstgebot()%> &euro;</span>
                     <span class="highest-bidder" id="<%=product.getId()%>bieter"><%=product.getHoechstbietender().getUsername()%></span>
                 </label>
-                <label class="accessibility" for="price"></label>
+                <label class="accessibility" for="price">Gebot</label>
                 <input type="number" step="0.01" min="0" id="price" class="bid-form-field form-input"
                        name="price" required>
                 <p id="bid-error" class="bid-error" style="display: none">Es gibt bereits ein h&ouml;heres Gebot oder der Kontostand ist zu

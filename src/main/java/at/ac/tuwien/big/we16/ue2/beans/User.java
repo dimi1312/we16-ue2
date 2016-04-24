@@ -20,7 +20,7 @@ public class User {
      * Postcondition: The constructor creates a new userobject.
      */
     public User() {
-        this.username ="kein Gebot";
+        this.username ="Niemand";
         this.password = "";
         this.money = 0.0;
     }
