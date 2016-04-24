@@ -8,7 +8,7 @@
             "img" : "red_hot_chili_peppers.png",
             "dbpedia": "http://dbpedia.org/page/Californication_(album)",
             "preis": 119.30,
-            "auction_end": "2016,04,24,19,31,37,265"
+            "auction_end": "2016,04,27,13,58,37,265"
         },
         {
             "product_id": "a066195f-590e-4d4d-bb70-961996b41314",
@@ -18,7 +18,7 @@
             "img" : "rolling_stones.png",
             "dbpedia": "http://dbpedia.org/page/Forty_Licks",
             "preis": 63.61,
-            "auction_end": "2016,04,24,00,57,00,000"
+            "auction_end": "2016,04,27,13,57,00,000"
 
         },
         {
@@ -29,7 +29,7 @@
             "img" : "metallica.png",
             "dbpedia": "http://dbpedia.org/page/Reload_(Metallica_album)",
             "preis": 83.46,
-            "auction_end": "2016,04,24,01,52,00,000"
+            "auction_end": "2016,04,27,13,53,00,000"
         }
     ],
     "books": [
@@ -41,7 +41,7 @@
             "img" : "pride_and_prejudice.png",
             "dbpedia": "http://dbpedia.org/page/Pride_and_Prejudice",
             "preis": 154.63,
-            "auction_end": "2016,04,24,13,31,35,295"
+            "auction_end": "2016,04,27,13,44,35,295"
         },
         {
             "product_id": "8505b7f2-7271-4d97-8343-971b6b912016",
@@ -51,7 +51,7 @@
             "img" : "1984.png",
             "dbpedia": "http://dbpedia.org/page/Nineteen_Eighty-Four",
             "preis": 202.91,
-            "auction_end": "2016,04,24,02,15,46,296"
+            "auction_end": "2016,04,27,13,50,46,296"
         },
         {
             "product_id": "2797123c-4d71-4dc2-9658-9c24a294f424",
@@ -61,7 +61,7 @@
             "img" : "the_great_gatsby.png",
             "dbpedia": "http://dbpedia.org/page/The_Great_Gatsby",
             "preis": 241.63,
-            "auction_end": "2016,04,24,02,25,12,297"
+            "auction_end": "2016,04,27,14,02,12,297"
         }
     ],
     "movies": [
@@ -73,7 +73,7 @@
             "img" : "the_godfather.png",
             "dbpedia": "http://dbpedia.org/page/The_Godfather",
             "preis": 118.93,
-            "auction_end": "2016,04,24,14,32,23,291"
+            "auction_end": "2016,04,27,14,05,23,291"
         },
         {
             "product_id": "fdf093a5-6ee2-48a0-b10f-21ec2735abe0",
@@ -83,7 +83,7 @@
             "img" : "the_martian.png",
             "dbpedia": "http://dbpedia.org/page/The_Martian_(film)",
             "preis": 340.72,
-            "auction_end": "2016,04,24,20,33,56,292"
+            "auction_end": "2016,04,27,13,50,56,292"
         },
         {
             "product_id": "a5d68110-562b-437f-992a-8b6735f9d251",
@@ -93,7 +93,7 @@
             "img" : "the_wizard_of_oz.png",
             "dbpedia": "http://dbpedia.org/page/The_Wizard_of_Oz_(1939_film)",
             "preis": 108.83,
-            "auction_end": "2016,03,14,14,32,22,294"
+            "auction_end": "2016,04,24,20,43,22,294"
         }
     ]
 }

@@ -122,8 +122,8 @@ socket.onmessage = function (event) {
         document.getElementById("konto_stand").firstChild.nodeValue = parsedData.balance;
         document.getElementById("anzahl").firstChild.nodeValue = parsedData.anzahl;
         document.getElementById("won").firstChild.nodeValue = parsedData.won;
-        document.getElementById("lost").firstChild.nodeValue = parsedData.lost;
-        if (document.getElementById("product_id").value == parsedData.product_id) {
+        document.getElementById("lost").firstChild.nodeValue= parsedData.lost;
+        if(document.getElementById("product_id").value == parsedData.product_id) {
             var exp = document.getElementById("exp");
             var rest = document.getElementById("restzeit");
             var form = document.getElementById("ajax_form");

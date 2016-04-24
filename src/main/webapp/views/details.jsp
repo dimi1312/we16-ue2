@@ -27,12 +27,9 @@
                                        konto.firstChild.nodeValue = val;
                                    } else if(index == "status") {
                                        var error = document.getElementById("bid-error");
-                                       alert("if");
                                        if(val == "error") {
-                                           alert("error");
                                            error.style.display = 'block';
                                        } else {
-                                           alert("kein error");
                                            error.style.display = 'none';
                                        }
                                    } else {

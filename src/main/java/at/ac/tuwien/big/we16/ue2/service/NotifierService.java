@@ -48,11 +48,17 @@ public class NotifierService {
         this.sortiment = sortiment;
     }
 
+    /**
+     * Postcondition: The methode creates a new Runnable to check all auctions if they are already expired. Every
+     * second the Runnable is performed. If an Auction is expired winner and loser are informed and the Auction
+     * is marked as expired so they wont be checked again
+     */
     public void startAuctionEndWatcher() {
         final Runnable checkAuctions = new Runnable() {
             int i = 0;
             public void run() {
                 for(Auction a : sortiment.getAuction()) {
+                    //checks if auction is expired
                     if (LocalDateTime.now().isAfter(LocalDateTime.parse(a.getAblaufdatum(), format)) && !a.isExpired()) {
                         synchronized (a) {
                             User winner = a.getHoechstbietender();
@@ -69,6 +75,7 @@ public class NotifierService {
                             }
                             a.setExpired();
                         }
+                        //message goes to all users
                         auctionEnd(a);
                     }
                 }
@@ -76,11 +83,17 @@ public class NotifierService {
         };
         final ScheduledFuture<?> beeper = this.executor.scheduleAtFixedRate(checkAuctions, 1,1, TimeUnit.SECONDS);
     }
+
+    /**
+     * Postcondition: The methode creates a Runnable which runs all 10 seconds and checks each not expired auction. With a
+     * probability of 30 percent, the current highest bid is overbid by 10 euros.
+     */
     public void startComputerUser() {
         final Runnable computer = new Runnable() {
             public void run() {
                 for(Auction auction : sortiment.getAuction()) {
                     int wahrscheinlichkeit = random.nextInt(101);
+                    //probability of 30 percent
                     if(wahrscheinlichkeit <= 30 && !auction.isExpired()) {
                         synchronized (auction) {
                             User loser = auction.getHoechstbietender();
@@ -116,8 +129,13 @@ public class NotifierService {
             userList.put(httpSession,user);
         }
     }
-    //bei allen Usern der Auction muss bei Ablauf laufend umgesetzt werden
-    //sowie gewonnen bzw verloren veraendert werden
+
+    /**
+     * Precondition: a != null and a is expired
+     * Postcondition: The methode sends a message about the end of the given acount and the current state of each user
+     * to each user
+     * @param a expired auction
+     */
     public void auctionEnd(Auction a) {
         for(Session session : clients.keySet()) {
             User user = userList.get(clients.get(session));
@@ -138,6 +156,13 @@ public class NotifierService {
 
     }
 
+    /**
+     * Precondition: auction != null, user != null, gutschrift >= 0
+     * Postcondition:
+     * @param auction Auction
+     * @param user User which has been overbidden
+     * @param gutschrift amount of money of the user
+     */
     public void ueberboten(Auction auction, User user, double gutschrift) {
         String message = "{\"typeMsg\": \"ueberboten\", \"balance\": \"" + gutschrift + "\", \"hlink\": \"link"+auction.getId()+"\"}";
         for(Session session : clients.keySet()) {
@@ -150,11 +175,24 @@ public class NotifierService {
            }
         }
     }
+
+    /**
+     * Precondition: auction != null, highesBidder != null, price >= 0
+     * Postcondtition: The methode sends a message about a new bid to all users
+     * @param auction Auction
+     * @param highestBidder new highest bidder for auction
+     * @param price bid on auction
+     */
     public void gebotAbgegeben(Auction auction, User highestBidder, double price) {
         String message = "{\"typeMsg\": \"newGebot\", \"product_id\": \"" + auction.getId() +"\",\"user\": \"" + highestBidder.getUsername() +"\",\"price\": \""+price+ "\", \"hlink\": \"link"+auction.getId()+"\"}";
         this.sendMessageToAllUsers(message);
     }
 
+    /**
+     * Precondition: message != null
+     * Postcondition: The methode sends the given message to all users.
+     * @param message message to be send
+     */
     public void sendMessageToAllUsers(String message) {
         for(Session session : clients.keySet()) {
             User user = userList.get(clients.get(session));
