@@ -1,7 +1,5 @@
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.beans.User" scope="session" />
 <jsp:useBean id="sortiment" class="at.ac.tuwien.big.we16.ue2.beans.Sortiment" scope="session" />
-<!doctype html>
-<html lang="de">
 <%
     if(user==null||!user.isLoggedIn())
         response.sendRedirect("/views/login.jsp");
@@ -9,6 +7,8 @@
     {
 %>
 <%@ page import="at.ac.tuwien.big.we16.ue2.beans.Auction" %>
+<!doctype html>
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <title>BIG Bid - Produkte</title>
@@ -51,12 +51,12 @@
         }
         function clickCounter(node) {
             if(supportsLocalStorage()) {
-                if(localStorage.last1 !== node.name) {
+                if(localStorage.last1 !== node.title) {
                     localStorage.last3 = localStorage.last2;
                     localStorage.href3 = localStorage.href2;
                     localStorage.last2 = localStorage.last1;
                     localStorage.href2 = localStorage.href1;
-                    localStorage.last1 = node.name;
+                    localStorage.last1 = node.title;
                     localStorage.href1 = node.href;
                 }
             }
@@ -124,8 +124,8 @@
         <div class="products">
             <% for (Auction p : sortiment.getAuction()) { %>
                 <div class="product-outer" data-product-id="<%=p.getId()%>">
-                    <a id="link<%=p.getId()%>" name="<%=p.getBezeichnung()%>" href="/../../controller/OverviewServlet?param=<%=p.getId()%>" onclick="clickCounter(this);"
-                       class="product <%=user.equals(p.getHoechstbietender())?" highlight":""%>" title="Mehr Informationen">
+                    <a id="link<%=p.getId()%>" href="/../../controller/OverviewServlet?param=<%=p.getId()%>" onclick="clickCounter(this);"
+                       class="product <%=user.equals(p.getHoechstbietender())?" highlight":""%>" title="<%=p.getBezeichnung()%>">
                         <img class="product-image" src="<%=p.getImg()%>" alt="<%=p.getBezeichnung()%>">
                         <dl class="product-properties properties">
                             <dt>Bezeichnung</dt>

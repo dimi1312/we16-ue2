@@ -97,12 +97,12 @@
             }
             function clickCounter(node) {
                 if(supportsLocalStorage()) {
-                    if(localStorage.last1 !== node.name) {
+                    if(localStorage.last1 !== node.title) {
                         localStorage.last3 = localStorage.last2;
                         localStorage.href3 = localStorage.href2;
                         localStorage.last2 = localStorage.last1;
                         localStorage.href2 = localStorage.href1;
-                        localStorage.last1 = node.name;
+                        localStorage.last1 = node.title;
                         localStorage.href1 = node.href;
                     }
                 }
@@ -166,7 +166,7 @@
     </aside>
     <main aria-labelledby="productheadline" class="details-container">
         <div class="details-image-container">
-            <img class="details-image" alt="<%=product.getBezeichnung()%>" src=<%=product.getImg()%>>
+            <img class="details-image" alt="<%=product.getBezeichnung()%>" src="<%=product.getImg()%>">
         </div>
         <div data-product-id="<%=product.getId()%>" class="details-data" id="<%=product.getId()%>">
             <h2 class="main-headline" id="productheadline"><%=product.getBezeichnung()%></h2>

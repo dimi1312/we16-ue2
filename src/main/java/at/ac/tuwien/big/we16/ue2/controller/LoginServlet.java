@@ -1,15 +1,10 @@
 package at.ac.tuwien.big.we16.ue2.controller;
 
-import at.ac.tuwien.big.we16.ue2.beans.Sortiment;
 import at.ac.tuwien.big.we16.ue2.beans.User;
-import at.ac.tuwien.big.we16.ue2.service.ServiceFactory;
-import javafx.scene.control.Alert;
-
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.xml.ws.Service;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * The class is called from login.jsp and handels the login of a user.
